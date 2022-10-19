@@ -16,7 +16,6 @@
 </div>
 <div class="login-text">
     <ul>
-        <!-- <li>현재 로그인 기능이 원활하지 않습니다. "게스트 입장" 버튼을 클릭하여 사이트에 접속하세요!</li> -->
         <li>Chrome 브라우저에서 접속을 권장합니다.</li><br>
         <li>아이디와 비밀번호를 입력 후 "로그인"를 눌러주세요!</li>
         <li>로그인 원활하게 진행되지 않으면, "게스트 입장"버튼을 클릭하여 사이트에 접속하세요!</li>
@@ -24,11 +23,11 @@
 </div>
 
 <div class="login-form">
-    <form name="form1">
+    <form name="form1" action="login-input" method="post">
         <input type="text" name="id" class="text-field" id="id" placeholder="아이디">
         <input type="password" name="password" id="pw" class="text-field" placeholder="비밀번호">
-        <button type="button" class="submit-btn" onClick="login()">로그인</button>
-        <button type="button" class="submit-btn" onclick="location.href='signup.html'">회원가입</button>
+        <button type="submit" class="submit-btn" onClick="login()">로그인</button>
+        <button type="button" class="submit-btn" onclick="location.href='member/signup.jsp'">회원가입</button>
         <button type="button" class="guest-btn" onclick="location.href='mainPage.html'">게스트 입장</button>
     </form>
     <div class="links">
