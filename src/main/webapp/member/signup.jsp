@@ -20,15 +20,15 @@
         </div>
 
         <div class="email">
-            <input id="email" type="text" placeholder="이메일을 입력해 주세요.">
+            <input id="email" type="text" name="userEmail" placeholder="이메일을 입력해 주세요.">
             <div id="emailError" class="error"></div>
         </div>
         <div class="id_">
-            <input id="id_"  type="text" placeholder="아이디를 입력해 주세요.">
+            <input id="id_"  type="text" name="userID" placeholder="아이디를 입력해 주세요.">
             <div id="id_Error" class="error"></div>
         </div>
         <div class="password">
-            <input id="password" type="password" placeholder="비밀번호를 입력해 주세요.">
+            <input id="password" type="password" name="userPassword" placeholder="비밀번호를 입력해 주세요.">
             <div id="passwordError" class="error"></div>
         </div>
         <div class="passwordCheck">
