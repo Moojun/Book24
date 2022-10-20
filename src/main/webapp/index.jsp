@@ -23,11 +23,12 @@
 </div>
 
 <div class="login-form">
-    <form name="form1" action="login-input" method="post">
-        <input type="text" name="id" class="text-field" id="id" placeholder="아이디">
-        <input type="password" name="password" id="pw" class="text-field" placeholder="비밀번호">
+<%--    <form name="form1" action="login-input" method="post">--%>
+    <form name="form1" action="member/join.jsp" method="post">
+        <input type="text" name="userID" class="text-field" id="id" placeholder="아이디">
+        <input type="password" name="userPassword" id="pw" class="text-field" placeholder="비밀번호">
         <button type="submit" class="submit-btn" onClick="login()">로그인</button>
-        <button type="button" class="submit-btn" onclick="location.href='member/signup.jsp'">회원가입</button>
+        <button type="button" class="submit-btn" onclick="location.href='member/join.jsp'">회원가입</button>
         <button type="button" class="guest-btn" onclick="location.href='mainPage.html'">게스트 입장</button>
     </form>
     <div class="links">
