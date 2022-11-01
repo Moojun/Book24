@@ -1,0 +1,148 @@
+package com.book24.User;
+
+import java.sql.*;
+
+// ref link: https://group11.tistory.com/9
+public class UserDAO {
+
+    //private String userID;
+    private String userEmail;
+    private String userPassword;
+    private static int primary_id;  // primary key in 'member' table
+
+    private Connection conn;
+    private ResultSet rs;
+
+    public UserDAO() {
+        try {
+            String dbURL = "jdbc:mysql://localhost:3306/Book24?characterEncoding=UTF-8";
+            String dbID = "root";
+            String dbPassword = "mac";
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            conn = DriverManager.getConnection(dbURL, dbID, dbPassword);
+
+        } catch (SQLException | ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+
+    }
+    /*
+    login
+
+    -2: id doesn't exist in database
+    -1: server connection error
+    0: password is incorrect
+    1: login success
+     */
+
+    public int login(String userEmail, String userPassword) {
+        try {
+            PreparedStatement pst = conn.prepareStatement("SELECT user_password " +
+                    "FROM member WHERE user_email = ?");
+            pst.setString(1, userEmail);
+            rs = pst.executeQuery();
+
+            if (rs.next()) {
+                return rs.getString("user_password").equals(userPassword) ? 1 : 0;
+            }
+            else {
+                return -2;
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return -1;
+        }
+    }
+
+    /*
+    Check if the e-mail already exists
+     */
+    public boolean Email_Check(String userEmail) {
+        try {
+            PreparedStatement pst = conn.prepareStatement("SELECT user_email " +
+                    "FROM member WHERE user_email = ?");
+            pst.setString(1, userEmail);
+            rs = pst.executeQuery();
+
+            if (rs.next()) {
+                return false;
+            }
+            else {
+                return true;
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    /*
+    signup
+    -1: server connection error
+    0: id already exists in database
+    1: success
+     */
+
+    public int join(UserDAO userDAO) {
+        if (!Email_Check(userDAO.getUserEmail())) {
+            return 0;
+        }
+
+        try {
+            PreparedStatement pst = conn.prepareStatement("INSERT INTO user" +
+                    "VALUES (?, ?, ?)");
+
+            pst.setInt(1, UserDAO.primary_id);
+            primary_id++;
+            pst.setString(2, userDAO.getUserEmail());
+            pst.setString(3, userDAO.getUserPassword());
+            return pst.executeUpdate();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return -1;
+        }
+    }
+
+    /*
+    get user data
+     */
+    public UserDAO getUser(String userEmail) {
+        try {
+            PreparedStatement pst = conn.prepareStatement("SELECT * FROM user" +
+                    "WHERE user_email = ?");
+            pst.setString(1, userEmail);
+            rs = pst.executeQuery();
+
+            if (rs.next()) {
+                UserDAO userDAO = new UserDAO();
+                userDAO.setUserEmail(rs.getString(2));
+                userDAO.setUserPassword(rs.getString(3));
+                return userDAO;
+            }
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+
+    public String getUserEmail() {
+        return userEmail;
+    }
+
+    public void setUserEmail(String userEmail) {
+        this.userEmail = userEmail;
+    }
+
+    public String getUserPassword() {
+        return userPassword;
+    }
+
+    public void setUserPassword(String userPassword) {
+        this.userPassword = userPassword;
+    }
+}
