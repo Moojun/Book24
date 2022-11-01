@@ -10,28 +10,30 @@ public class UserDAO {
     //private String userID;
     private String userEmail;
     private String userPassword;
-    private static int primary_id;  // primary key in 'member' table
 
     private Connection conn;
     private ResultSet rs;
 
-    String resource = "src/main/resources/db.properties";
+    String resource = "db.properties";
     Properties properties = new Properties();
 
     public UserDAO() {
         try {
 
             // db.properties 파일에서 가져온다.
-            InputStream reader = getClass().getResourceAsStream(resource);
+            InputStream reader = getClass().getClassLoader().getResourceAsStream(resource);
             properties.load(reader);
 
             String dbURL = properties.getProperty("url");
             String dbID = properties.getProperty("username");
             String dbPassword = properties.getProperty("password");
+
             Class.forName("com.mysql.cj.jdbc.Driver");
             conn = DriverManager.getConnection(dbURL, dbID, dbPassword);
 
-        } catch (SQLException | ClassNotFoundException | IOException e) {
+        } catch (SQLException | ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
             throw new RuntimeException(e);
         }
 
@@ -47,8 +49,7 @@ public class UserDAO {
 
     public int login(String userEmail, String userPassword) {
         try {
-            PreparedStatement pst = conn.prepareStatement("SELECT user_password " +
-                    "FROM member WHERE user_email = ?");
+            PreparedStatement pst = conn.prepareStatement("SELECT user_password FROM member WHERE user_email = ?");
             pst.setString(1, userEmail);
             rs = pst.executeQuery();
 
@@ -70,8 +71,7 @@ public class UserDAO {
      */
     public boolean Email_Check(String userEmail) {
         try {
-            PreparedStatement pst = conn.prepareStatement("SELECT user_email " +
-                    "FROM member WHERE user_email = ?");
+            PreparedStatement pst = conn.prepareStatement("SELECT user_email FROM member WHERE user_email = ?");
             pst.setString(1, userEmail);
             rs = pst.executeQuery();
 
@@ -101,13 +101,11 @@ public class UserDAO {
         }
 
         try {
-            PreparedStatement pst = conn.prepareStatement("INSERT INTO user" +
-                    "VALUES (?, ?, ?)");
+            PreparedStatement pst = conn.prepareStatement("INSERT INTO member VALUES (?, ?)");
 
-            pst.setInt(1, UserDAO.primary_id);
-            primary_id++;
-            pst.setString(2, userDAO.getUserEmail());
-            pst.setString(3, userDAO.getUserPassword());
+            pst.setString(1, userDAO.getUserEmail());
+            pst.setString(2, userDAO.getUserPassword());
+
             return pst.executeUpdate();
 
         } catch (Exception e) {
@@ -121,8 +119,7 @@ public class UserDAO {
      */
     public UserDAO getUser(String userEmail) {
         try {
-            PreparedStatement pst = conn.prepareStatement("SELECT * FROM user" +
-                    "WHERE user_email = ?");
+            PreparedStatement pst = conn.prepareStatement("SELECT * FROM member WHERE user_email = ?");
             pst.setString(1, userEmail);
             rs = pst.executeQuery();
 
