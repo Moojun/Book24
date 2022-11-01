@@ -1,8 +1,10 @@
 package com.book24.User;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.sql.*;
+import java.util.Properties;
 
-// ref link: https://group11.tistory.com/9
 public class UserDAO {
 
     //private String userID;
@@ -13,15 +15,23 @@ public class UserDAO {
     private Connection conn;
     private ResultSet rs;
 
+    String resource = "src/main/resources/db.properties";
+    Properties properties = new Properties();
+
     public UserDAO() {
         try {
-            String dbURL = "jdbc:mysql://localhost:3306/Book24?characterEncoding=UTF-8";
-            String dbID = "root";
-            String dbPassword = "mac";
+
+            // db.properties 파일에서 가져온다.
+            InputStream reader = getClass().getResourceAsStream(resource);
+            properties.load(reader);
+
+            String dbURL = properties.getProperty("url");
+            String dbID = properties.getProperty("username");
+            String dbPassword = properties.getProperty("password");
             Class.forName("com.mysql.cj.jdbc.Driver");
             conn = DriverManager.getConnection(dbURL, dbID, dbPassword);
 
-        } catch (SQLException | ClassNotFoundException e) {
+        } catch (SQLException | ClassNotFoundException | IOException e) {
             throw new RuntimeException(e);
         }
 
