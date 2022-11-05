@@ -10,7 +10,6 @@ public class UserDAO {
     //private String userID;
     private String userEmail;
     private String userPassword;
-    private static int primaryKeyNum = 1;
 
     private Connection conn;
     private ResultSet rs;
@@ -32,30 +31,10 @@ public class UserDAO {
             Class.forName("com.mysql.cj.jdbc.Driver");
             conn = DriverManager.getConnection(dbURL, dbID, dbPassword);
 
-        } catch (SQLException | ClassNotFoundException e) {
-            throw new RuntimeException(e);
-        } catch (IOException e) {
+        } catch (SQLException | ClassNotFoundException | IOException e) {
             throw new RuntimeException(e);
         }
 
-    }
-
-    /*
-    Update Primary Key Number in 'member' table
-     */
-    public void updatePrimaryKeyNum() {
-        try {
-            // Creating the Statement Object
-            Statement stmt = conn.createStatement();
-
-            // Executing the query
-            ResultSet resultSet = stmt.executeQuery("SELECT COUNT(*) FROM member");
-            resultSet.next();
-            primaryKeyNum = resultSet.getInt(1) + 1;
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
     }
 
     /*
@@ -120,14 +99,11 @@ public class UserDAO {
             return 0;
         }
 
-        updatePrimaryKeyNum();
-
         try {
-            PreparedStatement pst = conn.prepareStatement("INSERT INTO member VALUES (?, ?, ?)");
+            PreparedStatement pst = conn.prepareStatement("INSERT INTO member (user_email, user_password) VALUES (?, ?)");
 
-            pst.setInt(1, userDAO.primaryKeyNum);
-            pst.setString(2, userDAO.getUserEmail());
-            pst.setString(3, userDAO.getUserPassword());
+            pst.setString(1, userDAO.getUserEmail());
+            pst.setString(2, userDAO.getUserPassword());
 
             return pst.executeUpdate();
 
