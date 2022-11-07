@@ -1,0 +1,353 @@
+/* to import 'Lobster', cursive; fonts in #logo h1 */
+@import url('https://fonts.googleapis.com/css2?family=Lobster&display=swap');
+/* to import 'Montserrat', sans-serif; fonts in body */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&family=Roboto:ital,wght@0,400;0,500;1,700&display=swap');
+
+* {
+  margin: 0;  
+  padding: 0;   
+  box-sizing: border-box;  
+}
+a {
+  text-decoration: none;  
+}
+
+ul {
+  list-style: none;
+}
+
+#container {
+  margin: 0 auto;  
+  width: 1200px;    
+}
+body {
+  /* background-color: rgba(243, 248, 248, 0.1);  */
+  background-color: rgb(193, 172, 160, 0.3);
+}
+
+/*********************************/
+/* header: logo & nav */
+/*********************************/
+
+header {
+  width: 100%;    
+  height: 100px;   
+  /* background-color:#07c; */
+  background-color: rgb(74, 101, 120);
+  font-family: 'Lobster', cursive;
+  font-weight: bold;
+}
+
+#logo { 
+  float: left;   
+  width: 200px;   
+  height: 100px;  
+  line-height: 100px; 
+  padding-left: 50px;  
+}
+
+#logo h1 {
+  font-weight: 700;
+  font-size: 40px;  
+  color: yellow;
+}
+
+.my-page {
+  width: 100px;
+  height: 100px;
+  float: right;
+  padding-top: 20px;
+  color: white;
+}
+.my-page a {
+  color: white;
+  font-size: 13px;
+}
+.my-page a:hover {
+  color: yellow;
+}
+
+nav {  
+  float: left;   
+  width: 900px;   
+  height: 100px;   
+  padding-top: 40px; 
+  padding-left: 80px;
+  font-family: 'Lobster', cursive;
+}
+#topMenu {  
+  height: 60px; 
+}
+#topMenu > li {
+  float: left;  
+  position: relative;  
+}
+#topMenu > li > a{
+  display: block;  
+  color: #fff;  
+  font-weight: 600;  
+  padding: 20px 60px; 
+}
+
+#topMenu > li > a > span {
+  font-size : 0.5em; 
+}
+#topMenu > li > a:hover {
+  color: yellow;
+}
+
+#topMenu > li > ul { 
+  display: none;   
+  position: absolute;  
+  width: 160px;
+  background:rgba(255,255,255,0.6); 
+  left: 20px;     
+  margin: 0;
+}
+#topMenu > li > ul > li {    
+  padding: 10px 10px 10px 30px;   
+}
+#topMenu > li > ul > li > a { 
+  font-size: 14px;   
+  padding: 10px;
+  color: #000;  
+}
+#topMenu > li:hover > ul {
+  display: block;  
+  z-index: 10;  
+}
+#topMenu > li > ul > li > a:hover {
+  font-size: 30px;
+} 
+
+/**************************************/
+/* middle part */
+/**************************************/
+
+.middle-wrap {
+  margin-top: 50px;
+  margin-bottom: 100px;
+  width: 1200px;
+  height: 400px;
+  /* display: table; */
+}
+.picture {
+  /* display: inline-block; */
+  /* position: relative; */
+  float: left;
+}
+
+.slide {
+  display: inline-block;
+  background-color: white;
+  width: 430px;
+  height: 400px;
+}
+.slide-text {
+  /* display: inline; */
+  text-align: center;
+  /* width: 430px;
+  height: 100px; */
+  background-color: green;
+  font-size: 30px;
+}
+.slide-img {
+  /* width: 430px;
+  height: 380px; */
+  background-color: yellow;
+  /* display: table-cell; */
+  height: 50px;
+  width:50px;
+}
+
+
+
+
+
+
+/**************************************/
+/*  contents: tab menu and quick menu */
+/**************************************/
+
+#contents {  
+  width: 100%;  
+  height: 300px;  
+  margin-top: 60px;  
+}
+
+/* tab Menu */
+#tabMenu{  
+  float: left; 
+  width: 600px;  
+  height: 100%; 
+  margin-top: 0px; 
+}
+#tabMenu  input[type="radio"] {
+  /* 라디오 버튼 감춤 */ 
+  display: none;  
+}
+#tabMenu label {  
+  display: inline-block; 
+  margin: 0 0;  
+  padding: 15px 25px;  
+  font-weight: 600;  
+  text-align: center;  
+  color: rgb(102, 102, 102);    
+  border: 1px solid transparent;  
+}
+#tabMenu label:hover {  
+  cursor: pointer;
+}
+
+#tabMenu input:checked + label {  /* 활성화된 탭 제목 스타일 */ 
+  color: #b00;
+  border: 1px solid #ddd;
+  background-color: #eee;
+}
+
+.tabContent {  
+  display: none;
+  padding: 20px 0 0;
+  border-top: 1px solid #ddd;
+}
+
+#notice ul {
+  list-style: disc;
+  margin-left: 30px;
+}
+#notice ul li {
+  font-size: 16px;
+  line-height: 2.5;
+}
+#notice ul li a {
+  color: black;
+}
+#bulletin-board ul {
+  list-style: disc;
+  margin-left: 30px;
+}
+#bulletin-board ul li {
+  font-size: 16px;
+  line-height: 2.5;
+}
+#bulletin-board ul li a {
+  color: black;
+}
+
+#tab1:checked ~ #notice, 
+#tab2:checked ~ #bulletin-board {
+  display:block;
+}
+
+/* Quick Links */ 
+#links {  
+  float: right;   
+  width: 600px;   
+  height: 100%;   
+  margin-top: 20px;  
+}
+#links ul {
+  padding: 0;  
+  overflow: hidden;  
+}
+#links ul li {
+  float: left;  /* 가로로 배치 */
+  width: 50%;  /* 1/2 만큼 차지하도록 */
+  text-align: center;  
+  margin: 10px 0; 
+}
+
+#links ul li a span{
+  display: block;  
+  margin: 0 auto;  /* 가운데 배치 */ 
+  width: 150px;  
+  height: 150px; 
+  border-radius: 100%;  
+  line-height: 150px;  /* 수직으로 중간에 오게 */ 
+}
+
+#quick-icon1 {
+  background-color: rgb(255, 200, 0, 1);
+  color: white;
+  font-size: 80px;
+}
+#quick-icon2 {
+  background-color: rgb(255, 200, 0, 1);
+  color: white;
+  font-size: 80px;
+}
+
+#links ul li a p {
+  margin-top: 15px;  
+  font-weight: 600;  
+  color: rgb(102, 102, 102);  
+  font-size: 20px;
+}
+
+/******************/
+/*   footer   */
+/******************/
+
+footer {
+  background-color: rgb(255, 255, 255, 0.2);
+  width: 1200px;
+  height: 200px;
+  padding-top: 40px;
+  border-top: 2px solid #222;
+  font-family: 'Montserrat', sans-serif;
+  /* vertical-align: middle; */
+}
+
+footer .social-media {
+  text-align: center;
+  padding-bottom: 25px;
+}
+
+footer .social-media a {
+  width: 40px;
+  height: 40px;
+  font-size: 24px;
+  color: #5e6164;
+  border: 1px solid #ccc;
+  line-height: 38px;
+  display: inline-block;
+  text-align: center;
+  border-radius: 50%;
+  margin: 0 8px;
+  opacity: 0.7;
+}
+
+footer .social-media a:hover {
+  opacity: 1;
+}
+
+footer ul {
+  margin-top: 0;
+  margin-bottom: 0;
+  padding: 0;
+  list-style: none;
+  text-align: center;
+  font-size: 18px;
+  line-height: 1.6;
+}
+
+footer ul a {
+  color: #5e6164;
+  opacity: 0.8;
+}
+
+footer ul li {
+  display: inline-block;
+  padding: 0 15px;
+}
+
+footer ul a:hover {
+  opacity: 1;
+}
+
+footer .copyright {
+  margin-top: 20px;
+  text-align: center;
+  font-size: 13px;
+  color: #aaa;
+}
