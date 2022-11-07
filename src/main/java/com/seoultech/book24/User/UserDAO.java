@@ -3,13 +3,19 @@ package com.seoultech.book24.User;
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.*;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Properties;
+import java.time.LocalDate;
+import java.time.LocalTime;
 
 public class UserDAO {
 
     //private String userID;
     private String userEmail;
     private String userPassword;
+    private LocalDate regDate;
+    private LocalTime regTime;
 
     private Connection conn;
     private ResultSet rs;
@@ -100,10 +106,16 @@ public class UserDAO {
         }
 
         try {
-            PreparedStatement pst = conn.prepareStatement("INSERT INTO member (user_email, user_password) VALUES (?, ?)");
+            PreparedStatement pst = conn.prepareStatement("INSERT INTO member " +
+                    "(user_email, user_password, regdate, regtime) VALUES (?, ?, ?, ?)");
 
             pst.setString(1, userDAO.getUserEmail());
             pst.setString(2, userDAO.getUserPassword());
+            regDate = LocalDate.now();
+            regTime = LocalTime.now();
+            pst.setObject(3, regDate);
+            pst.setObject(4, regTime);
+
 
             return pst.executeUpdate();
 
