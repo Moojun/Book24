@@ -33,13 +33,13 @@
         PrintWriter script = response.getWriter();
         script.println("<script>");
         script.println("alert('이메일을 다시 확인해주세요.')");
-        script.println("location.href = 'index.jsp'");
+        script.println("history.back()");
         script.println("</script>");
     } else if(result == -1) {
         PrintWriter script = response.getWriter();
         script.println("<script>");
         script.println("alert('서버 오류 입니다.')");
-        script.println("location.href = 'index.jsp'");
+        script.println("history.back()");
         script.println("</script>");
     }
 %>
