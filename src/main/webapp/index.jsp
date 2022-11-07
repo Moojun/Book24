@@ -23,9 +23,8 @@
 </div>
 
 <div class="login-form">
-<%--    <form name="form1" action="login-input" method="post">--%>
-    <form name="form1" action="member/join.jsp" method="post">
-        <input type="text" name="userID" class="text-field" id="id" placeholder="아이디">
+    <form name="form1" action="member/login_action" method="post">
+        <input type="text" name="userID" class="text-field" id="id" placeholder="이메일">
         <input type="password" name="userPassword" id="pw" class="text-field" placeholder="비밀번호">
         <button type="submit" class="submit-btn" onClick="login()">로그인</button>
         <button type="button" class="submit-btn" onclick="location.href='member/join.jsp'">회원가입</button>
@@ -35,16 +34,6 @@
         <a href="#">비밀번호를 잊어버리셨나요?</a>
     </div>
 </div>
-<div class="result">
-    <h2>가입을 환영합니다!</h2>
-    <h3>가입 정보</h3>
-    <hr>
-    <p>아이디: <span id="result-id"></span><br></p>
-    <p>e-mail: <span id="result-email"></span><br></p>
-    <button type="button" class="result-btn" onclick="location.href='mainPage.html'">입장하기</button>
-</div>
-<script>
-    document.querySelector(".result").style.display = "none";
-</script>
+
 </body>
 </html>
