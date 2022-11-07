@@ -12,7 +12,7 @@
 - `style`: formatting, missing semi colons, etc; no production code change
 - `refactor`: refactoring production code, eg. renaming a variable
 - `test`: adding missing tests, refactoring tests; no production code change
-- `chore`: updating grunt tasks etc; no production code change
+- `chore`: Changes to the build process or auxiliary tools and libraries such as documentation generation. (updating grunt tasks, etc; no production code change)
 - `comment`: add or revise the comments
 - `rename`: rename file or directory
 - `remove`: remove file
