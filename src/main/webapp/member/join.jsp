@@ -19,31 +19,34 @@
             <h1>회원 가입</h1>
         </div>
 
-        <div class="email">
-            <input id="email" type="text" name="userEmail" placeholder="이메일을 입력해 주세요.">
-            <div id="emailError" class="error"></div>
-        </div>
-        <div class="id_">
-            <input id="id_"  type="text" name="userID" placeholder="아이디를 입력해 주세요.">
-            <div id="id_Error" class="error"></div>
-        </div>
-        <div class="password">
-            <input id="password" type="password" name="userPassword" placeholder="비밀번호를 입력해 주세요.">
-            <div id="passwordError" class="error"></div>
-        </div>
-        <div class="passwordCheck">
-            <input id="passwordCheck" type="password" placeholder="비밀번호를 다시 입력해 주세요.">
-            <div id="passwordCheckError" class="error"></div>
-        </div>
+        <form action="joinAction.jsp" method="post">
+            <div class="email">
+                <input id="email" type="text" name="userEmail" placeholder="이메일을 입력해 주세요.">
+                <div id="emailError" class="error"></div>
+            </div>
+            <!--
+            <div class="id_">
+                <input id="id_"  type="text" name="userID" placeholder="아이디를 입력해 주세요.">
+                <div id="id_Error" class="error"></div>
+            </div> -->
+            <div class="password">
+                <input id="password" type="password" name="userPassword1" placeholder="비밀번호를 입력해 주세요.">
+                <div id="passwordError" class="error"></div>
+            </div>
+            <div class="passwordCheck">
+                <input id="passwordCheck" type="password" name="userPassword2" placeholder="비밀번호를 다시 입력해 주세요.">
+                <div id="passwordCheckError" class="error"></div>
+            </div>
+            <div class="line">
+                <hr>
+            </div>
+            <div class="signUp">
+<%--                <button id="signUpButton" onclick="signUpCheck()">가입하기</button>--%>
+                <input type="submit" id="signUpButton" value="가입 완료" />
+            </div>
+        </form>
 
-        <div class="line">
-            <hr>
-        </div>
-        <div class="signUp">
-            <button id="signUpButton" onclick="signUpCheck()">가입하기</button>
-        </div>
     </div>
-
 
 </body>
 
