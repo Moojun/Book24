@@ -19,7 +19,7 @@
             <h1>회원 가입</h1>
         </div>
 
-        <form action="joinAction.jsp" method="post">
+        <form action="joinAction.jsp" method="post" onsubmit="return signUpCheck()">
             <div class="email">
                 <input id="email" type="text" name="userEmail" placeholder="이메일을 입력해 주세요.">
                 <div id="emailError" class="error"></div>
