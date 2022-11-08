@@ -11,6 +11,7 @@
     <body>
     <%
         String userEmail = request.getParameter("userEmail");
+        String userName = request.getParameter("userName");
         String userPassword1 = request.getParameter("userPassword1");
         String userPassword2 = request.getParameter("userPassword2");
 
@@ -38,6 +39,7 @@
             UserDAO userDAO = new UserDAO();
 
             userDAO.setUserEmail(userEmail);
+            userDAO.setUserName(userName);
             userDAO.setUserPassword(userPassword1);
 
             int result = userDAO.join(userDAO);

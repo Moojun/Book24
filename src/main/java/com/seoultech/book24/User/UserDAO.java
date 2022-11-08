@@ -13,6 +13,7 @@ public class UserDAO {
 
     //private String userID;
     private String userEmail;
+    private String userName;
     private String userPassword;
     private LocalDate regDate;
     private LocalTime regTime;
@@ -54,7 +55,7 @@ public class UserDAO {
 
     public int login(String userEmail, String userPassword) {
         try {
-            PreparedStatement pst = conn.prepareStatement("SELECT user_password FROM member WHERE user_email = ?");
+            PreparedStatement pst = conn.prepareStatement("SELECT user_password FROM user WHERE user_email = ?");
             pst.setString(1, userEmail);
             rs = pst.executeQuery();
 
@@ -76,7 +77,7 @@ public class UserDAO {
      */
     public boolean Email_Check(String userEmail) {
         try {
-            PreparedStatement pst = conn.prepareStatement("SELECT user_email FROM member WHERE user_email = ?");
+            PreparedStatement pst = conn.prepareStatement("SELECT user_email FROM user WHERE user_email = ?");
             pst.setString(1, userEmail);
             rs = pst.executeQuery();
 
@@ -106,16 +107,16 @@ public class UserDAO {
         }
 
         try {
-            PreparedStatement pst = conn.prepareStatement("INSERT INTO member " +
-                    "(user_email, user_password, regdate, regtime) VALUES (?, ?, ?, ?)");
+            PreparedStatement pst = conn.prepareStatement("INSERT INTO user " +
+                    "(user_email, user_name, user_password, regdate, regtime) VALUES (?, ?, ?, ?, ?)");
 
             pst.setString(1, userDAO.getUserEmail());
-            pst.setString(2, userDAO.getUserPassword());
+            pst.setString(2, userDAO.getUserName());
+            pst.setString(3, userDAO.getUserPassword());
             regDate = LocalDate.now();
             regTime = LocalTime.now();
-            pst.setObject(3, regDate);
-            pst.setObject(4, regTime);
-
+            pst.setObject(4, regDate);
+            pst.setObject(5, regTime);
 
             return pst.executeUpdate();
 
@@ -130,7 +131,7 @@ public class UserDAO {
      */
     public UserDAO getUser(String userEmail) {
         try {
-            PreparedStatement pst = conn.prepareStatement("SELECT * FROM member WHERE user_email = ?");
+            PreparedStatement pst = conn.prepareStatement("SELECT * FROM user WHERE user_email = ?");
             pst.setString(1, userEmail);
             rs = pst.executeQuery();
 
@@ -158,6 +159,14 @@ public class UserDAO {
 
     public String getUserPassword() {
         return userPassword;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
     public void setUserPassword(String userPassword) {
