@@ -6,18 +6,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Stock 24</title>
     <link href="css/login.css" rel="stylesheet" />
-<%--    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css"/>--%>
 </head>
 <body>
 <div class="login-logo">
-<%--    <i class="fa fa-book"></i> --%>
     Stock 24
-<%--    <h1>프로그래밍 도서 온라인 쇼핑몰입니다.</h1>--%>
+<%--    <h1>test</h1>--%>
 </div>
 <div class="login-text">
-<%--    <ul>--%>
-<%--        <li>Chrome 브라우저에서 접속을 권장합니다.</li>--%>
-<%--    </ul>--%>
+    <%--
+    <ul>
+        <li>test</li>
+    </ul>
+    --%>
 </div>
 
 <div class="login-form">
