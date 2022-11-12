@@ -12,7 +12,7 @@
 <body>
 <div class="container">
     <header>
-        <h2><a href="#"><i class="ion-plane"></i>Book 24</a></h2>
+        <h2><a href="#"><i class="ion-plane"></i>Stock 24</a></h2>
         <nav>
             <ul>
                 <li>
@@ -26,7 +26,8 @@
                 </li>
                 <li>
                     <!-- <a class="btn" href="#" title="Login">로그인 / 회원가입</a> -->
-                    <input type="button" class="btn" value="로그인 / 회원가입">
+                    <input type="button" class="btn"
+                           onclick="location.href='login.jsp'" value="로그인 / 회원가입">
                 </li>
             </ul>
         </nav>

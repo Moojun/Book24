@@ -6,7 +6,7 @@
 <html lang="ko">
     <head>
         <meta charset="UTF-8">
-        <title>Book 24</title>
+        <title>Stock 24</title>
     </head>
     <body>
     <%

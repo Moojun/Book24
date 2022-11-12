@@ -6,7 +6,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>Book 24</title>
+    <title>Stock 24</title>
 </head>
 <body>
 <%
@@ -21,7 +21,7 @@
         PrintWriter script = response.getWriter();
         script.println("<script>");
         script.println("alert('로그인 성공')");
-        script.println("location.href = '../mainPage.jsp'");
+        script.println("location.href = 'index.jsp'");
         script.println("</script>");
     } else if(result == 0) {
         PrintWriter script = response.getWriter();

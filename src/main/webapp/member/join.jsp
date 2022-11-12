@@ -5,17 +5,16 @@
 <head>
     <title>회원가입 페이지</title>
     <meta charset="utf-8">
-
     <link href="../css/join.css?after" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css"/>
     <script src="../js/join.js"></script>
-
 </head>
 
 <body>
     <div class="wrapper">
         <div class="login-logo">
-            <i class="fa fa-book"></i> Book 24
+<%--            <i class="fa fa-book"></i> --%>
+            Stock 24
             <h1>회원 가입</h1>
         </div>
 
@@ -44,9 +43,6 @@
                 <input type="submit" id="signUpButton" value="가입 완료" />
             </div>
         </form>
-
     </div>
-
 </body>
-
 </html>
