@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-<%@ page import="com.seoultech.book24.User.UserDAO" %>
+<%@ page import="com.seoultech.stock24.User.UserDAO" %>
 <%@ page import="java.io.PrintWriter" %>
 
 <!DOCTYPE html>
