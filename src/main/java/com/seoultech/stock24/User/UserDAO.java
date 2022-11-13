@@ -127,7 +127,7 @@ public class UserDAO {
     /*
     get user data
      */
-    public UserDAO getUser(String userEmail) {
+    public UserDAO getUserInfo(String userEmail) {
         try {
             PreparedStatement pst = conn.prepareStatement("SELECT * FROM user WHERE user_email = ?");
             pst.setString(1, userEmail);
@@ -136,7 +136,8 @@ public class UserDAO {
             if (rs.next()) {
                 UserDAO userDAO = new UserDAO();
                 userDAO.setUserEmail(rs.getString(2));
-                userDAO.setUserPassword(rs.getString(3));
+                userDAO.setUserName(rs.getString(3));
+                userDAO.setUserPassword(rs.getString(4));
                 return userDAO;
             }
         }

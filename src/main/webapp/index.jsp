@@ -1,5 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 
+<%
+    String userName = (String) session.getAttribute("userName");
+    String status = "";
+%>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -26,8 +31,19 @@
                 </li>
                 <li>
                     <!-- <a class="btn" href="#" title="Login">로그인 / 회원가입</a> -->
+                    <% if (userName == null) {
+                        status = "로그인/회원가입";
+                    %>
                     <input type="button" class="btn"
-                           onclick="location.href='login.jsp'" value="로그인 / 회원가입">
+                           onclick="location.href='login.jsp'" value=<%=status%> />
+                    <% } else {
+                        status = userName;
+                    %>
+                    <form action="logout.do" method="post">
+                        <input type="button" class="btn" value="<%=status%>님 환영합니다" />
+                        <input type="submit" class="btn" value="로그아웃" />
+                    </form>
+                    <% } %>
                 </li>
             </ul>
         </nav>

@@ -12,16 +12,21 @@
 <%
     String userEmail = request.getParameter("userEmail");
     String userPassword = request.getParameter("userPassword");
+    String userName = "";
 
     UserDAO userDAO = new UserDAO();
     int result = userDAO.login(userEmail, userPassword);
 
-    if(result == 1) {
-        session.setAttribute("userEmail", userEmail);
+    if (result == 1) {
+        UserDAO acceptUserDAO = userDAO.getUserInfo(userEmail);
+        userName = acceptUserDAO.getUserName();
+
+        session.setAttribute("userName", userName);   // index.jsp 로 이동했을 때 session 에 저장
+
         PrintWriter script = response.getWriter();
         script.println("<script>");
         script.println("alert('로그인 성공')");
-        script.println("location.href = 'index.jsp'");
+        script.println("location.href = '../index.jsp'");
         script.println("</script>");
     } else if(result == 0) {
         PrintWriter script = response.getWriter();
