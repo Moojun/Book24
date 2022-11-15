@@ -53,12 +53,12 @@ public class UserDAO {
 
     public int login(String userEmail, String userPassword) {
         try {
-            PreparedStatement pst = conn.prepareStatement("SELECT user_password FROM user WHERE user_email = ?");
+            PreparedStatement pst = conn.prepareStatement("SELECT password FROM user WHERE email = ?");
             pst.setString(1, userEmail);
             rs = pst.executeQuery();
 
             if (rs.next()) {
-                return rs.getString("user_password").equals(userPassword) ? 1 : 0;
+                return rs.getString("password").equals(userPassword) ? 1 : 0;
             }
             else {
                 return -2;
@@ -75,7 +75,7 @@ public class UserDAO {
      */
     public boolean Email_Check(String userEmail) {
         try {
-            PreparedStatement pst = conn.prepareStatement("SELECT user_email FROM user WHERE user_email = ?");
+            PreparedStatement pst = conn.prepareStatement("SELECT email FROM user WHERE email = ?");
             pst.setString(1, userEmail);
             rs = pst.executeQuery();
 
@@ -106,7 +106,7 @@ public class UserDAO {
 
         try {
             PreparedStatement pst = conn.prepareStatement("INSERT INTO user " +
-                    "(user_email, user_name, user_password, regdate, regtime) VALUES (?, ?, ?, ?, ?)");
+                    "(email, name, password, regdate, regtime) VALUES (?, ?, ?, ?, ?)");
 
             pst.setString(1, userDAO.getUserEmail());
             pst.setString(2, userDAO.getUserName());
@@ -129,7 +129,7 @@ public class UserDAO {
      */
     public UserDAO getUserInfo(String userEmail) {
         try {
-            PreparedStatement pst = conn.prepareStatement("SELECT * FROM user WHERE user_email = ?");
+            PreparedStatement pst = conn.prepareStatement("SELECT * FROM user WHERE email = ?");
             pst.setString(1, userEmail);
             rs = pst.executeQuery();
 
