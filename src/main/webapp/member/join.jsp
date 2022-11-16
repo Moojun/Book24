@@ -18,7 +18,7 @@
             <h1>회원 가입</h1>
         </div>
 
-        <form action="joinAction.jsp" method="post" onsubmit="return signUpCheck()">
+        <form action="joinAction.do" method="post" onsubmit="return signUpCheck()">
             <div class="email">
                 <input id="email" type="text" name="userEmail" placeholder="이메일을 입력해 주세요.">
                 <div id="emailError" class="error"></div>
@@ -39,7 +39,6 @@
                 <hr>
             </div>
             <div class="signUp">
-<%--                <button id="signUpButton" onclick="signUpCheck()">가입하기</button>--%>
                 <input type="submit" id="signUpButton" value="가입 완료" />
             </div>
         </form>

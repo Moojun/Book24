@@ -21,7 +21,7 @@
 </div>
 
 <div class="login-form">
-    <form name="form1" action="member/loginAction.jsp" method="post">
+    <form name="form1" action="loginAction.do" method="post">
         <input type="text" name="userEmail" class="text-field" id="id" placeholder="이메일">
         <input type="password" name="userPassword" id="pw" class="text-field" placeholder="비밀번호">
         <button type="submit" class="submit-btn" >로그인</button>
