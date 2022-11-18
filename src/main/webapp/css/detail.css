@@ -1,0 +1,276 @@
+/* to import 'Montserrat', sans-serif; fonts */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&family=Roboto:ital,wght@0,400;0,500;1,700&display=swap');
+@import url("footer.css");
+
+*, *:before, *:after {
+    -webkit-box-sizing: inherit;
+    -moz-box-sizing: inherit;
+    box-sizing: inherit;
+}
+
+::-webkit-input-placeholder {
+    color: #56585b;
+}
+
+::-moz-placeholder {
+    color: #56585b;
+}
+
+:-moz-placeholder {
+    color: #56585b;
+}
+
+html {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+body {
+    font-family:  'Montserrat', sans-serif;
+    margin: 0;
+    background-color: rgb(255, 255, 255, 0.8);
+    overflow: auto;
+}
+
+ul, nav{
+    list-style: none;
+    padding: 0;
+    vertical-align: center;
+}
+
+a {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+    opacity: 0.9;
+}
+
+a:hover {
+    opacity: 1;
+}
+
+h1 {
+    font-size: 3rem;
+    font-weight: 700;
+    color: black;
+    margin: 0 0 1.5rem;
+}
+
+i {
+    font-size: 1.3rem;
+}
+
+header {
+    /* position: absolute; */
+    top: 0;
+    left: 0;
+    z-index: 10;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: black;
+    padding: 10px 100px 0;
+    margin-bottom: 50px;
+}
+
+header nav ul {
+    display: flex;
+}
+
+header nav li{
+    margin: 0 15px;
+}
+
+header nav li:first-child{
+    margin-left: 0;
+}
+
+header nav li:last-child{
+    margin-right: 0;
+}
+
+.btn {
+    color: black;
+    padding: 10px;
+    border: 1px solid rgba(255,255,255,0.5);
+    -webkit-transition: all 0.2s;
+    -moz-transition: all 0.2s;
+    transition: all 0.2s;
+}
+.btn:hover {
+    background: #d73851;
+    border: 1px solid #d73851;
+    color: #fff;
+    cursor: pointer;
+}
+
+/* @media all and (max-width:800px) {
+    body {
+        font-size: 0.9rem;
+    }
+
+    .flex-form {
+        width: 100%;
+    }
+
+    input[type="search"] {
+        flex-basis: 100%;
+    }
+
+    .flex-form > * {
+        font-size: 0.9rem;
+    }
+
+    header {
+        -webkit-box-orient: vertical;
+        -webkit-box-direction: normal;
+        flex-direction: column;
+        padding: 10px !important;
+    }
+
+    header h2 {
+        margin-bottom: 15px;
+    }
+
+    h1 {
+        font-size: 2rem;
+    }
+
+    .cover {
+        padding: 20px;
+    }
+
+} */
+
+/* @media all and (max-width:360px) {
+    header nav li{
+        margin: 0 10px;
+    }
+
+    .flex-form {
+        display: -webkit-box;
+        display: flex;
+        -webkit-box-orient: vertical;
+        -webkit-box-direction: normal;
+        flex-direction: column;
+    }
+
+    input[type="search"] {
+        flex-basis: 0;
+    }
+
+    label {
+        display: none;
+    }
+} */
+
+
+.notice-list {
+    margin-bottom: 100px;
+}
+
+/* 아래 title */
+.board_title {
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+.board_title strong {
+    font-size: 3rem;
+}
+
+.board_title p {
+    margin-top: 5px;
+    font-size: 1.4rem;
+}
+
+
+.board_view {
+    width: calc(100% - 200px);
+    margin: auto;
+    border-top: 1px #a39485 solid;
+    text-align: center;
+}
+
+.board_view .title {
+    padding: 20px 15px;
+    border-bottom: 1px dashed #ddd;
+    font-size: 2rem;
+}
+
+.board_view .info {
+    padding: 15px;
+    border-bottom: 1px #a39485 solid;
+    font-size: 0;
+}
+
+.board_view .info dl {
+    position: relative;
+    display: inline-block;
+    padding: 0 20px;
+}
+
+.board_view .info dl:first-child {
+    padding-left: 0;
+}
+
+.board_view .info dl::before {
+    content: "";
+    position: absolute;
+    top: 1px;
+    left: 0;
+    display: block;
+    width: 1px;
+    height: 13px;
+    background: #ddd;
+}
+
+.board_view .info dl:first-child::before {
+    display: none;
+}
+
+.board_view .info dl dt, .board_view .info dl dd {
+    display: inline-block;
+    font-size: 1.4rem;
+}
+
+
+.board_view .info dl dd {
+    margin-left: 10px;
+    color: #777;
+}
+
+.board_view .cont {
+    padding: 15px;
+    border-bottom: 1px #a39485 solid;
+    line-height: 160%;
+    font-size: 1.4rem;
+}
+
+
+.bt_wrap {
+    margin-top: 30px;
+    text-align: center;
+    font-size: 0;
+}
+
+.bt_wrap a {
+    display: inline-block;
+    min-width: 80px;
+    margin-left: 10px;
+    padding: 10px;
+    border: 1px solid #000;
+    border-radius: 2px;
+    font-size: 1.4rem;
+}
+
+.bt_wrap a:first-child {
+    margin-left: 0;
+}
+
+.bt_wrap a.on {
+    background: #000;
+    color: #fff;
+}
