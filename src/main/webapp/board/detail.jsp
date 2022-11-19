@@ -31,33 +31,32 @@
         <div class="board_view_wrap">
             <div class="board_view">
                 <div class="title">
-                    test
+                        ${n.title}
                 </div>
                 <div class="info">
                     <dl>
                         <dt>번호</dt>
-                        <dd>1</dd>
+                        <dd>${n.id}</dd>
                     </dl>
                     <dl>
                         <dt>작성자</dt>
-                        <dd>test</dd>
+                        <dd>${n.writerId}</dd>
                     </dl>
                     <dl>
                         <dt>작성일</dt>
-                        <dd>2021.1.16</dd>
+                        <dd>${n.regDate}</dd>
                     </dl>
                     <dl>
                         <dt>조회수</dt>
-                        <dd>33</dd>
+                        <dd>${n.hit}</dd>
                     </dl>
                 </div>
                 <div class="cont">
-                    contents<br>
-                    contents<br>
+                    ${n.content}
                 </div>
             </div>
             <div class="bt_wrap">
-                <a href="list.jsp" class="on">목록</a>
+                <a href="list" class="on">목록</a>
                 <a href="#">수정</a>
             </div>
         </div>
@@ -68,4 +67,5 @@
 </div>
 </body>
 </html>
+
 
