@@ -1,3 +1,5 @@
+<%@ page import="com.seoultech.stock24.Entity.Notice" %>
+<%@ page import="java.util.List" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 
 <!DOCTYPE html>
@@ -38,76 +40,20 @@
             </tr>
             </thead>
             <tbody>
+            <%
+                List<Notice> list = (List<Notice>) request.getAttribute("list");
+                for (Notice n : list) {
+                    pageContext.setAttribute("n", n);
+            %>
             <tr>
-                <td>1</td>
-                <td>test</td>
-                <td>test</td>
-                <td>test</td>
-                <td>1</td>
+                <td>${n.id}</td>
+                <td><a href="detail?id=${n.id}">${n.title}</a></td>
+                <td>${n.writerId}</td>
+                <td>${n.regDate}</td>
+                <td>${n.hit}</td>
             </tr>
-            <tr>
-                <td>2</td>
-                <td>test</td>
-                <td>test</td>
-                <td>test</td>
-                <td>1</td>
-            </tr>
-            <tr>
-                <td>3</td>
-                <td>test</td>
-                <td>test</td>
-                <td>test</td>
-                <td>1</td>
-            </tr>
-            <tr>
-                <td>4</td>
-                <td>test</td>
-                <td>test</td>
-                <td>test</td>
-                <td>1</td>
-            </tr>
-            <tr>
-                <td>5</td>
-                <td>test</td>
-                <td>test</td>
-                <td>test</td>
-                <td>1</td>
-            </tr>
-            <tr>
-                <td>6</td>
-                <td>test</td>
-                <td>test</td>
-                <td>test</td>
-                <td>1</td>
-            </tr>
-            <tr>
-                <td>7</td>
-                <td>test</td>
-                <td>test</td>
-                <td>test</td>
-                <td>1</td>
-            </tr>
-            <tr>
-                <td>8</td>
-                <td>test</td>
-                <td>test</td>
-                <td>test</td>
-                <td>1</td>
-            </tr>
-            <tr>
-                <td>9</td>
-                <td>test</td>
-                <td>test</td>
-                <td>test</td>
-                <td>1</td>
-            </tr>
-            <tr>
-                <td>10</td>
-                <td>test</td>
-                <td>test</td>
-                <td>test</td>
-                <td>1</td>
-            </tr>
+            <% } %>
+
             </tbody>
         </table>
         <div class="board_page">
