@@ -27,7 +27,7 @@
                     <a href="#" title="Interests">관심 목록</a>
                 </li>
                 <li>
-                    <a href="#" title="Bullet-Board">게시판</a>
+                    <a href="board/list.jsp" title="Bullet-Board">게시판</a>
                 </li>
                 <li>
                     <!-- <a class="btn" href="#" title="Login">로그인 / 회원가입</a> -->
