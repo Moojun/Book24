@@ -31,14 +31,6 @@ public class UserController extends HttpServlet {
     public void doAction(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        try {
-            request.setCharacterEncoding("UTF-8");
-            response.setCharacterEncoding("UTF-8");
-            response.setContentType("text/html; charset=UTF-8");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
         String uri = request.getRequestURI();
 
         // session 확인
