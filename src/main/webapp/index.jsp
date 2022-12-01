@@ -33,7 +33,7 @@
                     <a href="#" title="Interests">관심 목록</a>
                 </li>
                 <li>
-                    <a href="board/list.jsp" title="Bullet-Board">게시판</a>
+                    <a href="board/list" title="Bullet-Board">게시판</a>
                 </li>
                 <li>
                     <!-- <a class="btn" href="#" title="Login">로그인 / 회원가입</a> -->
@@ -57,11 +57,11 @@
 
     <div class="cover">
         <h1>검색할 주식을 입력하세요</h1>
-        <form class="flex-form">
+        <form class="flex-form" method="post" action="stock/view">
             <label for="from">
                 <i class="ion-location"></i>
             </label>
-            <input type="search" placeholder="입력하기">
+            <input type="search" name="stockName" placeholder="입력하기">
             <input type="submit" value="Search">
         </form>
     </div>
