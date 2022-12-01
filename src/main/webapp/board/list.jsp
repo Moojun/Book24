@@ -2,6 +2,7 @@
 <%@ page import="java.util.List" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <!DOCTYPE html>
 <html>
@@ -46,8 +47,8 @@
                 <td>${n.id}</td>
                 <td><a href="detail?id=${n.id}">${n.title}</a></td>
                 <td>${n.writerId}</td>
-                <td>${n.regDate}</td>
-                <td>${n.hit}</td>
+                <td><fmt:formatDate value="${n.regDate}" pattern="yyyy-MM-dd" /> </td>
+                <td><fmt:formatNumber type="number" value="${n.hit}"></td>
             </tr>
             </c:forEach>
 
