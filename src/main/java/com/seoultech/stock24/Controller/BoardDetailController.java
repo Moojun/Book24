@@ -20,7 +20,7 @@ public class BoardDetailController extends HttpServlet {
             throws ServletException, IOException {
 
         int id = Integer.parseInt(request.getParameter("id"));
-        request.setAttribute("id", id);
+        //request.setAttribute("id", id);
 
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
@@ -58,6 +58,6 @@ public class BoardDetailController extends HttpServlet {
         }
 
         // forward
-        request.getRequestDispatcher("detail.jsp").forward(request, response);
+        request.getRequestDispatcher("detail").forward(request, response);
     }
 }
