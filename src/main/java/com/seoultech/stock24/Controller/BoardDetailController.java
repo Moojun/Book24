@@ -37,15 +37,15 @@ public class BoardDetailController extends HttpServlet {
 
             rs.next();
 
-
             String title = rs.getString("title");
             String writerId = rs.getString("writer_id");
             Date regDate = rs.getDate("regdate");
             int hit = rs.getInt("hit");
+            String files = rs.getString("files");
             String content = rs.getString("content");
 
             Notice notice = new Notice(id, title, writerId, regDate,
-                    hit, content);
+                    hit, files, content);
 
             request.setAttribute("n", notice);
 
