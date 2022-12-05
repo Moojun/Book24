@@ -1,4 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -30,6 +32,8 @@
     </div>
     <div id="chart"></div>
     <script>
+        let stockName = "<c:out value="${stockName}"/>";
+
         anychart.onDocumentReady(function () {
             // add data
             let data = [
@@ -55,13 +59,18 @@
             let chart = anychart.line();
             // create the series and name them
             let firstSeries = chart.line(firstSeriesData);
-            firstSeries.name("Roger Federer");
+            firstSeries.name(stockName);
             // add a legend
             chart.legend().enabled(true);
             // add a title
-            chart.title("Big Three's Grand Slam Title Race");
+            chart.title("주식의 현재 가격");
             // specify where to display the chart
             chart.container("chart");
+
+            // name the axes
+            chart.xAxis().title("Time");
+            chart.yAxis().title("Current Price");
+
             // draw the resulting chart
             chart.draw();
         });

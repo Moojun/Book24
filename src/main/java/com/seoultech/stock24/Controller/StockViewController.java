@@ -20,7 +20,7 @@ import java.sql.SQLException;
 // import java.sql.Connection; // In Java, cannot import two different classes with the same name.
 import java.util.Properties;
 
-@WebServlet("/stock/view")
+@WebServlet("/view/stock")
 public class StockViewController extends HttpServlet {
 
     @Override
@@ -97,6 +97,12 @@ public class StockViewController extends HttpServlet {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
+
+
+        request.setAttribute("stockName", stockName);
+
+        // forward
+        request.getRequestDispatcher("stock.jsp").forward(request, response);
 
     }
 }

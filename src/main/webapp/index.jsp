@@ -57,7 +57,7 @@
 
     <div class="cover">
         <h1>검색할 주식을 입력하세요</h1>
-        <form class="flex-form" method="post" action="stock/view">
+        <form class="flex-form" method="post" action="view/stock"">
             <label for="from">
                 <i class="ion-location"></i>
             </label>
