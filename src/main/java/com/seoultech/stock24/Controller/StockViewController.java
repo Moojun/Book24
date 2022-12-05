@@ -29,6 +29,7 @@ public class StockViewController extends HttpServlet {
 
         request.setCharacterEncoding("utf-8");
         response.setContentType("text/html; charset=UTF-8");
+        response.setCharacterEncoding("UTF-8");
 
         String stockName = request.getParameter("stockName");
         String stockCode = "";
