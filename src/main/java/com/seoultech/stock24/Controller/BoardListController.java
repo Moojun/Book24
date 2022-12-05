@@ -41,9 +41,10 @@ public class BoardListController extends HttpServlet {
                 String writerId = rs.getString("writer_id");
                 Date regDate = rs.getDate("regdate");
                 int hit = rs.getInt("hit");
+                String files = rs.getString("files");
                 String content = rs.getString("content");
 
-                Notice notice = new Notice(id, title, writerId, regDate, hit, content);
+                Notice notice = new Notice(id, title, writerId, regDate, hit, files, content);
                 list.add(notice);
             }
             rs.close();

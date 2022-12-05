@@ -1,6 +1,8 @@
 <%@ page import="com.seoultech.stock24.Entity.Notice" %>
 <%@ page import="java.util.List" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <!DOCTYPE html>
 <html>
@@ -40,32 +42,44 @@
             </tr>
             </thead>
             <tbody>
-            <%
-                List<Notice> list = (List<Notice>) request.getAttribute("list");
-                for (Notice n : list) {
-                    pageContext.setAttribute("n", n);
-            %>
+            <c:forEach var="n" items="${list}" begin="0" end="9">
             <tr>
                 <td>${n.id}</td>
                 <td><a href="detail?id=${n.id}">${n.title}</a></td>
                 <td>${n.writerId}</td>
-                <td>${n.regDate}</td>
-                <td>${n.hit}</td>
+                <td><fmt:formatDate value="${n.regDate}" pattern="yyyy-MM-dd" /> </td>
+                <td><fmt:formatNumber type="number" value="${n.hit}" /></td>
             </tr>
-            <% } %>
+            </c:forEach>
 
             </tbody>
         </table>
         <div class="board_page">
-            <a href="#" class="bt first"><<</a>
-            <a href="#" class="bt prev"><</a>
-            <a href="#" class="num on">1</a>
-            <a href="#" class="num">2</a>
-            <a href="#" class="num">3</a>
-            <a href="#" class="num">4</a>
-            <a href="#" class="num">5</a>
-            <a href="#" class="bt next">></a>
-            <a href="#" class="bt last">>></a>
+
+            <c:set var="page" value="${param.p == null ? 1 : param.p}" />
+            <c:set var="startNum" value="${page - (page - 1) % 5}" />
+
+<%--            임의로 lastNum 지정--%>
+            <c:set var="lastNum" value="23" />
+
+            <c:if test="${startNum - 1 > 0}">
+                <a href="?p=${startNum - 1}&t=&q=" class="bt prev"><</a>
+            </c:if>
+            <c:if test="${startNum - 1 <= 0}">
+                <a href="#" class="bt prev" onclick="alert('이전 페이지가 없습니다.');"><</a>
+            </c:if>
+
+            <c:forEach var="i" begin="0" end="4">
+                <a href="?p=${startNum+i}&t=&q=" class="num">${startNum + i}</a>
+            </c:forEach>
+
+            <c:if test="${startNum + 5 < lastNum}">
+                <a href="?p=${startNum+5}&t=&q=" class="bt next">> </a>
+            </c:if>
+            <c:if test="${startNum + 5 >= lastNum}">
+                <a href="#" class="bt next" onclick="alert('다음 페이지가 없습니다.');">> </a>
+            </c:if>
+
         </div>
     </div>
 

@@ -1,4 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <!DOCTYPE html>
 <html>
@@ -44,11 +46,28 @@
                     </dl>
                     <dl>
                         <dt>작성일</dt>
-                        <dd>${n.regDate}</dd>
+                        <dd>
+                            <fmt:formatDate pattern="yyyy-MM-dd hh:mm:ss" value="${n.regDate}" />
+                        </dd>
                     </dl>
                     <dl>
                         <dt>조회수</dt>
                         <dd>${n.hit}</dd>
+                    </dl>
+                </div>
+                <div class="info">
+                    <dl>
+                        <dt>첨부파일</dt>
+                        <dd>
+                            <c:forTokens var="fileName" items="${n.files}" delims="," varStatus="st">
+                                <a href="${fileName}" style="color:blue;">${fileName}</a>
+
+    <%--                            마지막 값인지 검사--%>
+                                <c:if test="${!st.last}">
+                                    /
+                                </c:if>
+                            </c:forTokens>
+                        </dd>
                     </dl>
                 </div>
                 <div class="cont">
