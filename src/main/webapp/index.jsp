@@ -27,7 +27,7 @@
         <nav>
             <ul>
                 <li>
-                    <a href="#" title="Stocks">주가 검색</a>
+                    <a href="view/stock.jsp" title="Stocks">주가 확인</a>
                 </li>
                 <li>
                     <a href="#" title="Interests">관심 목록</a>
