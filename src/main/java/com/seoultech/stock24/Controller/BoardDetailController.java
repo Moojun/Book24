@@ -58,6 +58,6 @@ public class BoardDetailController extends HttpServlet {
         }
 
         // forward
-        request.getRequestDispatcher("detail").forward(request, response);
+        request.getRequestDispatcher("detail.jsp").forward(request, response);
     }
 }
