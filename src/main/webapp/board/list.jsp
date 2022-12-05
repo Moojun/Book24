@@ -48,7 +48,7 @@
                 <td><a href="detail?id=${n.id}">${n.title}</a></td>
                 <td>${n.writerId}</td>
                 <td><fmt:formatDate value="${n.regDate}" pattern="yyyy-MM-dd" /> </td>
-                <td><fmt:formatNumber type="number" value="${n.hit}"></td>
+                <td><fmt:formatNumber type="number" value="${n.hit}" /></td>
             </tr>
             </c:forEach>
 
