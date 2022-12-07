@@ -158,28 +158,47 @@ header nav li:last-child{
 
 
 .notice-list {
-    margin-bottom: 100px;
+    margin-bottom: 20px;
 }
 
 /* 아래 title */
 .board_title {
-    margin-bottom: 30px;
+    margin-bottom: 10px;
     text-align: center;
 }
 
 .board_title strong {
-    font-size: 3rem;
+    font-size: 2rem;
 }
 
 .board_title p {
-    margin-top: 5px;
-    font-size: 1.4rem;
+    font-size: 1.2rem;
+}
+
+.w-btn {
+    position: relative;
+    border: none;
+    display: inline-block;
+    padding: 15px 30px;
+    border-radius: 15px;
+    font-family: "paybooc-Light", sans-serif;
+    box-shadow: 0 5px 5px rgba(0, 0, 0, 0.2);
+    text-decoration: none;
+    font-weight: 600;
+    transition: 0.25s;
+}
+.w-btn-green {
+    background-color: #77af9c;
+    color: #d7fff1;
+}
+.w-btn:hover {
+    cursor: pointer;
 }
 
 #chart {
     margin-left: auto;
     margin-right: auto;
     width: 70%;
-    height: 600px;
+    height: 400px;
     margin-bottom: 200px;
 }

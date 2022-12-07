@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <%
     // 로그아웃 뒤로가기 처리
@@ -6,10 +7,9 @@
     response.setHeader("Cache-Control", "no-cache");
     response.setHeader("Cache-Control", "no-store");
     response.setDateHeader("Expires", 0L);
-
-    String userName = (String) session.getAttribute("userName");
-    String status = "";
 %>
+
+<c:set var="userName" value="${sessionScope.userName}" />
 
 <!DOCTYPE html>
 <html>
@@ -27,29 +27,37 @@
         <nav>
             <ul>
                 <li>
-                    <a href="view/stock.jsp" title="Stocks">주가 확인</a>
-                </li>
-                <li>
-                    <a href="#" title="Interests">관심 목록</a>
+                    <c:if test="${userName eq null}">
+                        <a href="#" title="Stocks" onclick="alert('로그인 후 이용해주세요!')">주가 확인</a>
+                    </c:if>
+                    <c:if test="${userName ne null}">
+                        <a href="view/stock.jsp" title="Stocks">주가 확인</a>
+                    </c:if>
                 </li>
                 <li>
                     <a href="board/list" title="Bullet-Board">게시판</a>
                 </li>
                 <li>
-                    <!-- <a class="btn" href="#" title="Login">로그인 / 회원가입</a> -->
-                    <% if (userName == null) {
-                        status = "로그인/회원가입";
-                    %>
+                    <c:if test="${userName eq null}">
+                        <a href="#" title="Interests" onclick="alert('로그인 후 이용해주세요!')">마이페이지</a>
+                    </c:if>
+                    <c:if test="${userName ne null}">
+                        <a href="#" title="Interests">마이페이지</a>
+                    </c:if>
+                </li>
+                <li>
+                    <c:if test="${userName eq null}">
+                        <c:set var="status" value="로그인/회원가입" />
                     <input type="button" class="btn"
-                           onclick="location.href='login.jsp'" value=<%=status%> />
-                    <% } else {
-                        status = userName;
-                    %>
+                           onclick="location.href='login.jsp'" value=${status} />
+                    </c:if>
+                    <c:if test="${userName ne null}">
+                        <c:set var="status" value="${userName}" />
                     <form action="logout.do" method="post">
-                        <input type="button" class="btn" value="<%=status%>님 환영합니다" />
+                        <input type="button" class="btn" value="${status}님 환영합니다" />
                         <input type="submit" class="btn" value="로그아웃" />
                     </form>
-                    <% } %>
+                    </c:if>
                 </li>
             </ul>
         </nav>
@@ -57,12 +65,12 @@
 
     <div class="cover">
         <h1>검색할 주식을 입력하세요</h1>
-        <form class="flex-form" method="post" action="view/stock"">
+        <form class="flex-form" method="post" action="view/stock">
             <label for="from">
                 <i class="ion-location"></i>
             </label>
-            <input type="search" name="stockName" placeholder="입력하기">
-            <input type="submit" value="Search">
+            <input type="search" name="stockName" placeholder="입력하기" />
+            <input type="submit" value="Search" />
         </form>
     </div>
 </div>

@@ -59,6 +59,7 @@ public class UserController extends HttpServlet {
                 userName = acceptUserDAO.getUserName();
 
                 session.setAttribute("userName", userName);   // index.jsp 로 이동했을 때 session 에 저장
+                session.setMaxInactiveInterval(60 * 60);
 
                 script.println("<script>");
                 script.println("alert('로그인 성공')");
