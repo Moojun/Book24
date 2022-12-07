@@ -1,5 +1,20 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
+<c:set var="today" value="<%=new java.util.Date()%>" />
+<c:set var="stockViewDate">
+    <fmt:formatDate value="${today}" pattern="yyyy년 MM월 dd일"/>
+</c:set>
+<c:set var="stockViewClock">
+    <fmt:formatDate value="${today}" pattern="HH:mm:ss" />
+</c:set>
+<c:set var="stockName" value="${sessionScope.stockName}" />
+<c:set var="stockInfoMap" value="${sessionScope.stockInfoMap}" />
+<%
+    // 페이지 자동 새로고침
+    //response.setHeader("Refresh", "10");
+%>
 
 <!DOCTYPE html>
 <html>
@@ -10,6 +25,7 @@
     <link rel="stylesheet" href="../css/stock.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css"/>
     <script src="https://cdn.anychart.com/releases/8.11.0/js/anychart-base.min.js"></script>
+
 </head>
 <body>
 <div class="container">
@@ -28,76 +44,67 @@
         <div class="board_title">
             <strong>주식 차트</strong>
             <p>주식의 현재가를 실시간으로 보여주는 그래프에요</p>
+            <p>현재 날짜: <c:out value="${stockViewDate}" /></p>
+            <p>현재 시간: <c:out value="${stockViewClock}" /></p>
+            <form method="post" action="stock">
+                <button type="submit" class="w-btn w-btn-green">차트 갱신하기</button>
+
+                <%-- 주식 명칭을 담아서 보냄--%>
+                <input type="hidden" name="stockName" value="${stockName}" />
+            </form>
         </div>
     </div>
     <div id="chart"></div>
     <script>
         let stockName = "<c:out value="${stockName}"/>";
+        let mapData = [];
+
+        <c:forEach var="map" items="${stockInfoMap}" >
+            mapData.push(["${map.key}", ${map.value}]);
+        </c:forEach>
+
+        // 위의 forEach 에서 reverse 가 힘들기 때문에 여기서 reverse() 절차 필요
+        mapData.reverse();
+        console.log(mapData);
 
         anychart.onDocumentReady(function () {
-            // add data
-            let data = [
-                ["10:00:00", 1],
-                ["10:00:05", 4],
-                ["10:00:10", 6],
-                ["10:00:15", 9],
-                ["10:00:20", 12],
-                ["10:00:25", 13],
-                ["10:00:30", 27],
-                ["10:00:35", 16],
-                ["10:00:40", 16],
-                ["10:00:45", 17],
-                ["10:00:50", 38],
-                ["10:00:55", 16],
-                ["10:01:00", 17],
-            ];
+            
+            let data = mapData;
+
             // create a data set
             let dataSet = anychart.data.set(data);
+
             // map the data for all series
             let firstSeriesData = dataSet.mapAs({x: 0, value: 1});
+
             // create a line chart
             let chart = anychart.line();
+
             // create the series and name them
             let firstSeries = chart.line(firstSeriesData);
             firstSeries.name(stockName);
+
             // add a legend
             chart.legend().enabled(true);
+
             // add a title
             chart.title("주식의 현재 가격");
+
             // specify where to display the chart
             chart.container("chart");
 
             // name the axes
-            chart.xAxis().title("Time");
-            chart.yAxis().title("Current Price");
+            chart.xAxis().title("시간(단위: 분:초)");
+            chart.yAxis().title("현재 가격");
 
             // draw the resulting chart
             chart.draw();
         });
+
     </script>
 
-    <footer>
-        <div class="social-media">
-            <a href="https://www.instagram.com" target="_blank"><i class="fab fa-instagram"></i></a>
-            <a href="https://www.github.com/Moojun" target="_blank"><i class="fab fa-github"></i></a>
-            <a href="https://www.facebook.com" target="_blank"><i class="fab fa-facebook-f"></i></a>
-        </div>
-        <ul class="list">
-            <li>
-                <a href="#">Home</a>
-            </li>
-            <li>
-                <a href="#">Services</a>
-            </li>
-            <li>
-                <a href="#">About</a>
-            </li>
-            <li>
-                <a href="#">Privacy Policy</a>
-            </li>
-        </ul>
-        <p class="copyright">copyright (c) mjkim@seoultech.ac.kr</p><br><br>
-    </footer>
+    <%--include footer--%>
+    <jsp:include page="../inner/footer.jsp" />
 </div>
 </body>
 </html>
