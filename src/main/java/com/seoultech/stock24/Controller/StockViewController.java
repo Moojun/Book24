@@ -127,7 +127,7 @@ public class StockViewController extends HttpServlet {
             java.sql.Connection con = DriverManager.getConnection(dbURL,dbID, dbPassword);
 
             if (!currentTime.equals("기준(장마감)")) {
-                String sql = "INSERT INTO stock_price VALUES(?, ?, ?, ?)";
+                String sql = "INSERT INTO stock_price (name, date, time, price) VALUES(?, ?, ?, ?)";
                 PreparedStatement pst = con.prepareStatement(sql);
                 pst.setString(1, stockName);
                 pst.setString(2, currentDate);      // 크롤링 결과 사용
