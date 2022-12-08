@@ -11,10 +11,6 @@
 </c:set>
 <c:set var="stockName" value="${sessionScope.stockName}" />
 <c:set var="stockInfoMap" value="${sessionScope.stockInfoMap}" />
-<%
-    // 페이지 자동 새로고침
-    //response.setHeader("Refresh", "10");
-%>
 
 <!DOCTYPE html>
 <html>
@@ -68,7 +64,7 @@
         console.log(mapData);
 
         anychart.onDocumentReady(function () {
-            
+
             let data = mapData;
 
             // create a data set
@@ -94,7 +90,7 @@
             chart.container("chart");
 
             // name the axes
-            chart.xAxis().title("시간(단위: 분:초)");
+            chart.xAxis().title("시간(단위: 시:분:초)");
             chart.yAxis().title("현재 가격");
 
             // draw the resulting chart

@@ -111,9 +111,9 @@ public class StockViewController extends HttpServlet {
 
             // 현재 시간에서 분/초 받아오기
             LocalTime now = LocalTime.now();
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("mm:ss");
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss");
             String serverClock = now.format(formatter);
-            System.out.println("현재 분:초 : " + serverClock);
+            System.out.println("현재 시:분:초 : " + serverClock);
 
             Class.forName("com.mysql.cj.jdbc.Driver");
 
