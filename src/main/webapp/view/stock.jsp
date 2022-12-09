@@ -98,6 +98,9 @@
         });
 
     </script>
+    <div class="interest-btn">
+        <button type="submit" class="w-btn-outline w-btn-blue-outline">관심등록</button>
+    </div>
 
     <%--include footer--%>
     <jsp:include page="../inner/footer.jsp" />
