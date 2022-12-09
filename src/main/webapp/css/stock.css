@@ -187,12 +187,19 @@ header nav li:last-child{
     font-weight: 600;
     transition: 0.25s;
 }
+.w-btn:hover {
+    letter-spacing: 2px;
+    transform: scale(1.2);
+    cursor: pointer;
+}
+
 .w-btn-green {
     background-color: #77af9c;
     color: #d7fff1;
 }
-.w-btn:hover {
-    cursor: pointer;
+.w-btn-green {
+    background-color: #77af9c;
+    color: #d7fff1;
 }
 
 #chart {
@@ -200,5 +207,38 @@ header nav li:last-child{
     margin-right: auto;
     width: 70%;
     height: 400px;
-    margin-bottom: 200px;
+    margin-bottom: 50px;
+}
+
+.interest-btn {
+    margin-bottom: 150px;
+    text-align: center;
+}
+
+.w-btn-outline {
+    position: relative;
+    padding: 15px 30px;
+    border-radius: 15px;
+    font-family: "paybooc-Light", sans-serif;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+    text-decoration: none;
+    font-weight: 600;
+    transition: 0.25s;
+}
+.w-btn-outline:hover {
+    letter-spacing: 2px;
+    transform: scale(1.2);
+    cursor: pointer;
+}
+.w-btn-outline:active {
+    transform: scale(1.5);
+}
+
+.w-btn-blue-outline {
+    border: 3px solid #6aafe6;
+    color: #6e6e6e;
+}
+.w-btn-blue-outline:hover {
+    background-color: #6aafe6;
+    color: #d4dfe6;
 }

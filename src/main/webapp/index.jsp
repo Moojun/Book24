@@ -9,7 +9,7 @@
     response.setDateHeader("Expires", 0L);
 %>
 
-<c:set var="userName" value="${sessionScope.userName}" />
+<c:set var="userID" value="${sessionScope.userID}" />
 
 <!DOCTYPE html>
 <html>
@@ -27,10 +27,10 @@
         <nav>
             <ul>
                 <li>
-                    <c:if test="${userName eq null}">
+                    <c:if test="${userID eq null}">
                         <a href="#" title="Stocks" onclick="alert('로그인 후 이용해주세요!')">주가 확인</a>
                     </c:if>
-                    <c:if test="${userName ne null}">
+                    <c:if test="${userID ne null}">
                         <a href="view/stock.jsp" title="Stocks">주가 확인</a>
                     </c:if>
                 </li>
@@ -38,21 +38,21 @@
                     <a href="board/list" title="Bullet-Board">게시판</a>
                 </li>
                 <li>
-                    <c:if test="${userName eq null}">
+                    <c:if test="${userID eq null}">
                         <a href="#" title="Interests" onclick="alert('로그인 후 이용해주세요!')">마이페이지</a>
                     </c:if>
-                    <c:if test="${userName ne null}">
+                    <c:if test="${userID ne null}">
                         <a href="#" title="Interests">마이페이지</a>
                     </c:if>
                 </li>
                 <li>
-                    <c:if test="${userName eq null}">
+                    <c:if test="${userID eq null}">
                         <c:set var="status" value="로그인/회원가입" />
                     <input type="button" class="btn"
                            onclick="location.href='login.jsp'" value=${status} />
                     </c:if>
-                    <c:if test="${userName ne null}">
-                        <c:set var="status" value="${userName}" />
+                    <c:if test="${userID ne null}">
+                        <c:set var="status" value="${userID}" />
                     <form action="logout.do" method="post">
                         <input type="button" class="btn" value="${status}님 환영합니다" />
                         <input type="submit" class="btn" value="로그아웃" />

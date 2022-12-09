@@ -47,7 +47,7 @@ public class UserController extends HttpServlet {
         if (uri.equals("/loginAction.do")) {
             String userEmail = request.getParameter("userEmail");
             String userPassword = request.getParameter("userPassword");
-            String userName = "";
+            String userID = "";
 
             UserDAO userDAO = new UserDAO();
             int result = userDAO.login(userEmail, userPassword);
@@ -56,9 +56,9 @@ public class UserController extends HttpServlet {
 
             if (result == 1) {
                 UserDAO acceptUserDAO = userDAO.getUserInfo(userEmail);
-                userName = acceptUserDAO.getUserName();
+                userID = acceptUserDAO.getUserId();
 
-                session.setAttribute("userName", userName);   // index.jsp 로 이동했을 때 session 에 저장
+                session.setAttribute("userID", userID);   // index.jsp 로 이동했을 때 session 에 저장
                 session.setMaxInactiveInterval(60 * 60);
 
                 script.println("<script>");
@@ -98,12 +98,12 @@ public class UserController extends HttpServlet {
          */
         else if (uri.equals("/member/joinAction.do")) {
             String userEmail = request.getParameter("userEmail");
-            String userName = request.getParameter("userName");
+            String userID = request.getParameter("userID");
             String userPassword1 = request.getParameter("userPassword1");
 
             UserDAO joinUserDAO = new UserDAO();
             joinUserDAO.setUserEmail(userEmail);
-            joinUserDAO.setUserName(userName);
+            joinUserDAO.setUserId(userID);
             joinUserDAO.setUserPassword(userPassword1);
 
             int result = joinUserDAO.join(joinUserDAO);
