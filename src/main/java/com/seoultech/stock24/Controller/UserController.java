@@ -58,7 +58,9 @@ public class UserController extends HttpServlet {
                 UserDAO acceptUserDAO = userDAO.getUserInfo(userEmail);
                 userID = acceptUserDAO.getUserId();
 
+                session.setAttribute("userEmail", userEmail);
                 session.setAttribute("userID", userID);   // index.jsp 로 이동했을 때 session 에 저장
+
                 session.setMaxInactiveInterval(60 * 60);
 
                 script.println("<script>");
