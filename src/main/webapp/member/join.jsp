@@ -24,7 +24,7 @@
                 <div id="emailError" class="error"></div>
             </div>
             <div class="jName">
-                <input id="jName" type="text" name="userName" placeholder="이름을 입력해 주세요.">
+                <input id="jName" type="text" name="userID" placeholder="사용할 아이디를 입력해 주세요.">
                 <div id="name_Error" class="error"></div>
             </div>
             <div class="password">

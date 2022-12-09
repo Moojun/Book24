@@ -9,9 +9,10 @@ import java.time.LocalTime;
 
 public class UserDAO {
 
-    //private String userID;
     private String userEmail;
-    private String userName;
+
+    private String userID;
+    //private String userName;
     private String userPassword;
     private LocalDate regDate;
     private LocalTime regTime;
@@ -93,6 +94,29 @@ public class UserDAO {
     }
 
     /*
+    Check if the user_id already exists
+     */
+    public boolean UserID_check(String userID) {
+        try {
+            PreparedStatement pst = conn.prepareStatement("SELECT user_id FROM user WHERE user_id = ?");
+            pst.setString(1, userID);
+            rs = pst.executeQuery();
+
+            if (rs.next()) {
+                return false;
+            }
+            else {
+                return true;
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+
+    /*
     signup
     -1: server connection error
     0: id already exists in database
@@ -104,12 +128,17 @@ public class UserDAO {
             return 0;
         }
 
+        if (!UserID_check(userDAO.getUserId())) {
+            System.out.println("here");
+            return 0;
+        }
+
         try {
             PreparedStatement pst = conn.prepareStatement("INSERT INTO user " +
-                    "(email, name, password, regdate, regtime) VALUES (?, ?, ?, ?, ?)");
+                    "(email, user_id, password, regdate, regtime) VALUES (?, ?, ?, ?, ?)");
 
             pst.setString(1, userDAO.getUserEmail());
-            pst.setString(2, userDAO.getUserName());
+            pst.setString(2, userDAO.getUserId());
             pst.setString(3, userDAO.getUserPassword());
             regDate = LocalDate.now();
             regTime = LocalTime.now();
@@ -136,7 +165,7 @@ public class UserDAO {
             if (rs.next()) {
                 UserDAO userDAO = new UserDAO();
                 userDAO.setUserEmail(rs.getString(2));
-                userDAO.setUserName(rs.getString(3));
+                userDAO.setUserId(rs.getString(3));
                 userDAO.setUserPassword(rs.getString(4));
                 return userDAO;
             }
@@ -160,12 +189,12 @@ public class UserDAO {
         return userPassword;
     }
 
-    public String getUserName() {
-        return userName;
+    public String getUserId() {
+        return userID;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setUserId(String userID) {
+        this.userID = userID;
     }
 
     public void setUserPassword(String userPassword) {

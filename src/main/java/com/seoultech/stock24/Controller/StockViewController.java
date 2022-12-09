@@ -41,9 +41,9 @@ public class StockViewController extends HttpServlet {
         response.setCharacterEncoding("UTF-8");
 
         HttpSession checkedUserLoginSession = request.getSession();
-        String userLogin = (String) checkedUserLoginSession.getAttribute("userName");
+        String userID = (String) checkedUserLoginSession.getAttribute("userID");
 
-        if (userLogin == null || userLogin.equals("")) {
+        if (userID == null || userID.equals("")) {
             printAlertMessage(response, "로그인 후 이용해 주세요!");
         }
 
@@ -127,20 +127,23 @@ public class StockViewController extends HttpServlet {
             java.sql.Connection con = DriverManager.getConnection(dbURL,dbID, dbPassword);
 
             if (!currentTime.equals("기준(장마감)")) {
-                String sql = "INSERT INTO stock_price (name, date, time, price) VALUES(?, ?, ?, ?)";
+                String sql = "INSERT INTO stock_price (user_id, stock_name, date, time, price)" +
+                        " VALUES(?, ?, ?, ?, ?)";
                 PreparedStatement pst = con.prepareStatement(sql);
-                pst.setString(1, stockName);
-                pst.setString(2, currentDate);      // 크롤링 결과 사용
-                pst.setString(3, serverClock);      // 현재 시간 사용(크롤링 결과와 무관)
-                pst.setFloat(4, currentFloatPrice); // 크롤링 결과 사용
+                pst.setString(1, userID);
+                pst.setString(2, stockName);
+                pst.setString(3, currentDate);      // 크롤링 결과 사용
+                pst.setString(4, serverClock);      // 현재 시간 사용(크롤링 결과와 무관)
+                pst.setFloat(5, currentFloatPrice); // 크롤링 결과 사용
                 int result = pst.executeUpdate();
             }
 
-            String sql = "SELECT * FROM stock_price WHERE name = ? AND date = ? " +
+            String sql = "SELECT * FROM stock_price WHERE user_id = ? AND stock_name = ? AND date = ? " +
                     "ORDER BY id DESC LIMIT 10";
             PreparedStatement pst = con.prepareStatement(sql);
-            pst.setString(1, stockName);
-            pst.setString(2, currentDate);
+            pst.setString(1, userID);
+            pst.setString(2, stockName);
+            pst.setString(3, currentDate);
             ResultSet rs = pst.executeQuery();
 
             while(rs.next()) {
