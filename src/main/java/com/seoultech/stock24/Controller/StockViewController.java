@@ -49,6 +49,10 @@ public class StockViewController extends HttpServlet {
         }
 
         String stockName = request.getParameter("stockName");
+        if (stockName == null) {
+            // redirect 할 때, session에 값을 저장했으므로 session에서 값을 가져온다.
+            stockName = (String) checkedUserLoginSession.getAttribute("stockName");
+        }
         String stockCode = "";
         String stockClass = ""; // KOSPI or KOSDAQ
 
@@ -93,18 +97,17 @@ public class StockViewController extends HttpServlet {
             Document document = connection.get();
             Elements elements = document.select(".date");
             String[] str = elements.text().split(" ");
-            System.out.println("str[0] : " + str[0]);
-            System.out.println("str[1] : " + str[1]);
-
             Elements currentList = document.select(".new_totalinfo dl>dd");
 
-            String currentDate = str[0];
+            //String currentDate = str[0];
             String currentTime = str[1];
             String currentPrice = currentList.get(3).text().split(" ")[1];  // 현재가
 
+            //System.out.println("str[0] is 웹 크롤링 date : " + str[0]);
+            //System.out.println("str[1] is 웹 크롤링 time : " + str[1]);
             System.out.println("종목명 : " + stockName);
             System.out.println("주가:" + currentPrice);
-            System.out.println("가져오는 시간:" + currentDate.indexOf('.') +" / " + currentTime);
+            //System.out.println("가져오는 시간:" + currentDate.indexOf('.') +" / " + currentTime);
 
             // Float 형 변환
             currentPrice = currentPrice.replaceAll(",", "");

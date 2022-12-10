@@ -93,7 +93,6 @@ public class MyPageController extends HttpServlet {
                         pst2.setString(4, currentDStr);
 
                         pst2.executeUpdate();
-                        System.out.println("여기서 문제?");
                     }
 
                     rs.close();
@@ -118,8 +117,6 @@ public class MyPageController extends HttpServlet {
                         String stock_name = rs3.getString("stock_name");
                         String stock_class = rs3.getString("class");
                         String regDate = rs3.getString("regDate");
-
-                        System.out.println("stname : " + stock_name + ", userID : " + rs3.getString("user_id"));
 
                         Interest interest = new Interest(stock_name, stock_class, regDate);
                         interestList.add(interest);
@@ -188,10 +185,14 @@ public class MyPageController extends HttpServlet {
         else if (uri.equals("/move/myPage")) {
 
             String stockName = request.getParameter("stockName");
-            request.setAttribute("stockName", stockName);
+            session.setAttribute("stockName", stockName);
+
+            // StockViewController 로 redirect: 경로 수정을 위해서.
+            // 아래 forwarding 의 경우는 경로 수정이 반영되지 않음
+            response.sendRedirect("../view/stock");
 
             // StockViewController 로 forwarding
-            request.getRequestDispatcher("../view/stock").forward(request, response);
+            //request.getRequestDispatcher("../view/stock").forward(request, response);
         }
 
         // myPage.jsp 에서 "삭제하기" 버튼을 누른 경우
@@ -227,8 +228,8 @@ public class MyPageController extends HttpServlet {
                 throw new RuntimeException(e);
             }
 
-            // MyPageController 내에 /ind/myPage 로 재 forwarding
-            request.getRequestDispatcher("/ind/myPage").forward(request, response);
+            // MyPageController 내에 /ind/myPage 로 redirect: 경로 수정을 위해서
+            response.sendRedirect("/ind/myPage");
         }
 
     }
