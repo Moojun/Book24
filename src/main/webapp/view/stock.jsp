@@ -98,7 +98,7 @@
         });
 
     </script>
-    <form method="post" action="myPage.jsp">
+    <form method="post" action="myPage">
         <div class="interest-btn">
             <button type="submit" class="w-btn-outline w-btn-blue-outline">관심등록</button>
 

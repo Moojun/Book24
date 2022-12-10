@@ -42,7 +42,7 @@
                         <a href="#" title="Interests" onclick="alert('로그인 후 이용해주세요!')">마이페이지</a>
                     </c:if>
                     <c:if test="${userID ne null}">
-                        <a href="view/myPage.jsp" title="Interests">마이페이지</a>
+                        <a href="ind/myPage" title="Interests">마이페이지</a>
                     </c:if>
                 </li>
                 <li>

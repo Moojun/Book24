@@ -1,7 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <c:set var="userEmail" value="${sessionScope.userEmail}" />
 <c:set var="userID" value="${sessionScope.userID}" />
+<c:set var="interestList" value="${requestScope.interestList}" />
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -58,15 +61,25 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr>
-                        <td>삼성전자</td>
-                        <td>KOSPI</td>
-                        <td>2022.12.09</td>
-                        <td>
-                            <button class="view">보기</button>
-                            <button class="delete">삭제하기</button>
-                        </td>
-                    </tr>
+                    <c:forEach var="n" items="${interestList}">
+                        <tr>
+                            <td>${n.stockName}</td>
+                            <td>${n.stockClass}</td>
+                            <td>${n.date}</td>
+                            <td>
+                                <form method="post" action="../move/myPage">
+                                    <button type="submit" class="view">보기</button>
+                                        <%-- 주식 명칭을 담아서 보냄--%>
+                                    <input type="hidden" name="stockName" value="${n.stockName}" />
+                                </form>
+                                <form method="post" action="../del/myPage">
+                                    <button type="submit" class="delete">삭제하기</button>
+                                        <%-- 주식 명칭을 담아서 보냄--%>
+                                    <input type="hidden" name="stockName" value="${n.stockName}" />
+                                </form>
+                            </td>
+                        </tr>
+                    </c:forEach>
                     </tbody>
                     <tfoot>
                         <tr>
