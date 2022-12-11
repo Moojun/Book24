@@ -1,0 +1,275 @@
+/* to import 'Montserrat', sans-serif; fonts */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&family=Roboto:ital,wght@0,400;0,500;1,700&display=swap');
+
+@import url("footer.css");
+
+*, *:before, *:after {
+    -webkit-box-sizing: inherit;
+    -moz-box-sizing: inherit;
+    box-sizing: inherit;
+}
+
+::-webkit-input-placeholder {
+    color: #56585b;
+}
+
+::-moz-placeholder {
+    color: #56585b;
+}
+
+:-moz-placeholder {
+    color: #56585b;
+}
+
+html {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+body {
+    font-family:  'Montserrat', sans-serif;
+    margin: 0;
+    background-color: rgb(255, 255, 255, 0.8);
+    overflow: auto;
+}
+
+ul, nav{
+    list-style: none;
+    padding: 0;
+    vertical-align: center;
+}
+
+a {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+    opacity: 0.9;
+}
+
+a:hover {
+    opacity: 1;
+}
+
+h1 {
+    font-size: 3rem;
+    font-weight: 700;
+    color: black;
+    margin: 0 0 1.5rem;
+}
+
+i {
+    font-size: 1.3rem;
+}
+
+header {
+    /* position: absolute; */
+    top: 0;
+    left: 0;
+    z-index: 10;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: black;
+    padding: 10px 100px 0;
+}
+
+header nav ul {
+    display: flex;
+}
+
+header nav li{
+    margin: 0 15px;
+}
+
+header nav li:first-child{
+    margin-left: 0;
+}
+
+header nav li:last-child{
+    margin-right: 0;
+}
+
+.btn {
+    color: black;
+    padding: 10px;
+    border: 1px solid rgba(255,255,255,0.5);
+    -webkit-transition: all 0.2s;
+    -moz-transition: all 0.2s;
+    transition: all 0.2s;
+}
+.btn:hover {
+    background: #d73851;
+    border: 1px solid #d73851;
+    color: #fff;
+    cursor: pointer;
+}
+
+/* @media all and (max-width:800px) {
+    body {
+        font-size: 0.9rem;
+    }
+
+    .flex-form {
+        width: 100%;
+    }
+
+    input[type="search"] {
+        flex-basis: 100%;
+    }
+
+    .flex-form > * {
+        font-size: 0.9rem;
+    }
+
+    header {
+        -webkit-box-orient: vertical;
+        -webkit-box-direction: normal;
+        flex-direction: column;
+        padding: 10px !important;
+    }
+
+    header h2 {
+        margin-bottom: 15px;
+    }
+
+    h1 {
+        font-size: 2rem;
+    }
+
+    .cover {
+        padding: 20px;
+    }
+
+} */
+
+/* @media all and (max-width:360px) {
+    header nav li{
+        margin: 0 10px;
+    }
+
+    .flex-form {
+        display: -webkit-box;
+        display: flex;
+        -webkit-box-orient: vertical;
+        -webkit-box-direction: normal;
+        flex-direction: column;
+    }
+
+    input[type="search"] {
+        flex-basis: 0;
+    }
+
+    label {
+        display: none;
+    }
+} */
+
+
+/* .notice-list {
+    margin-bottom: 100px;
+} */
+
+/* 아래 title */
+.board_title {
+    margin-top: 10px;
+    text-align: center;
+    margin-bottom: 60px;
+}
+
+.board_title strong {
+    font-size: 50px;
+    font-weight: bold;
+}
+.board_title p {
+    margin-top: 20px;
+    font-size: 50px;
+    font-weight: bold;
+}
+.board_title li {
+    font-size: 25px;
+}
+
+/* board_title 내부의 table 설정 */
+.board_title table th {
+    background-color: rgb(197, 176, 176);
+}
+
+.board_title table td {
+    font-size: 25px;
+}
+/*******************************/
+
+.main-myPage {
+    border-top: 2px solid rgb(73, 54, 54, 0.4);
+    width: 100%;
+    height: 600px;
+}
+
+.left-myPage {
+    width: 50%;
+    float: left;
+    height: 100%;
+    box-sizing: border-box;
+    border-right: 2px solid rgb(73, 54, 54, 0.4);
+}
+.right-myPage {
+    width: 50%;
+    float: right;
+    height: 100%;
+    box-sizing: border-box;
+}
+
+.main-myPage p {
+    text-align: center;
+    font-size: 40px;
+    font-weight: bold;
+}
+
+/* table 부분 */
+table {
+    width: 600px;
+    text-align: center;
+    border: 1px solid #fff;
+    border-spacing: 1px;
+    font-family: 'Cairo', sans-serif;
+    margin: auto;
+}
+
+table td {
+    padding: 10px;
+    background-color: #eee;
+}
+
+table th {
+    background-color: #333;
+    color: #fff;
+    padding: 10px;
+}
+
+.view, .delete {
+    border: none;
+    padding: 5px 10px;
+    color: #fff;
+    font-weight: bold;
+}
+
+.view {
+    background-color: #03A9F4;
+}
+.delete {
+    background-color: #E91E63;
+}
+
+.view:hover, .delete:hover {
+    cursor: pointer;
+    font-size: 25px;
+}
+
+.tableFoot {
+    padding: 0;
+    border-bottom: 3px solid #009688;
+}
+/*******************************/
+

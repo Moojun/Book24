@@ -98,9 +98,14 @@
         });
 
     </script>
-    <div class="interest-btn">
-        <button type="submit" class="w-btn-outline w-btn-blue-outline">관심등록</button>
-    </div>
+    <form method="post" action="myPage">
+        <div class="interest-btn">
+            <button type="submit" class="w-btn-outline w-btn-blue-outline">관심등록</button>
+
+            <%-- 주식 명칭을 담아서 보냄--%>
+            <input type="hidden" name="stockName" value="${stockName}" />
+        </div>
+    </form>
 
     <%--include footer--%>
     <jsp:include page="../inner/footer.jsp" />
