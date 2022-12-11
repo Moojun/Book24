@@ -36,7 +36,7 @@ public class BoardListController extends HttpServlet {
             String dbURL = properties.getProperty("url");
             String dbID = properties.getProperty("username");
             String dbPassword = properties.getProperty("password");
-            String sql = "select * from board where id = ?";
+            String sql = "select * from board";
 
             Connection con = DriverManager.getConnection(dbURL, dbID, dbPassword);
             Statement st = con.createStatement();
