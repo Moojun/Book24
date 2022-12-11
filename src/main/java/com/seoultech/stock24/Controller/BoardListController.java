@@ -8,10 +8,12 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.InputStream;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Properties;
 
 @WebServlet("/board/list")
 public class BoardListController extends HttpServlet {
@@ -22,15 +24,21 @@ public class BoardListController extends HttpServlet {
 
         List<Notice> list = new ArrayList<>();
 
+        String resource = "db.properties";
+        Properties properties = new Properties();
+
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
 
-            String url = "jdbc:mysql://localhost:3306/Stock24?useUnicode=true&characterEncoding=utf8";
-            String username = "root";
-            String password = "mac";
-            String sql = "SELECT * FROM board";
+            InputStream reader = getClass().getClassLoader().getResourceAsStream(resource);
+            properties.load(reader);
 
-            Connection con = DriverManager.getConnection(url, username, password);
+            String dbURL = properties.getProperty("url");
+            String dbID = properties.getProperty("username");
+            String dbPassword = properties.getProperty("password");
+            String sql = "select * from board where id = ?";
+
+            Connection con = DriverManager.getConnection(dbURL, dbID, dbPassword);
             Statement st = con.createStatement();
             ResultSet rs = st.executeQuery(sql);
 
