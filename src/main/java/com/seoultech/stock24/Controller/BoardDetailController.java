@@ -1,6 +1,6 @@
 package com.seoultech.stock24.Controller;
 
-import com.seoultech.stock24.Entity.Notice;
+import com.seoultech.stock24.Entity.Board;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -52,10 +52,10 @@ public class BoardDetailController extends HttpServlet {
             String files = rs.getString("files");
             String content = rs.getString("content");
 
-            Notice notice = new Notice(id, title, writerId, regDate,
+            Board board = new Board(id, title, writerId, regDate,
                     hit, files, content);
 
-            request.setAttribute("n", notice);
+            request.setAttribute("n", board);
 
             rs.close();
             pst.close();

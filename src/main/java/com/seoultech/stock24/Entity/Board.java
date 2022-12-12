@@ -2,7 +2,7 @@ package com.seoultech.stock24.Entity;
 
 import java.util.Date;
 
-public class Notice {
+public class Board {
 
     private int id;
     private String title;
@@ -12,9 +12,9 @@ public class Notice {
     private String files;
     private String content;
 
-    public Notice() {}
+    public Board() {}
 
-    public Notice(int id, String title, String writerId, Date regDate, int hit, String files, String content) {
+    public Board(int id, String title, String writerId, Date regDate, int hit, String files, String content) {
         this.id = id;
         this.title = title;
         this.writerId = writerId;

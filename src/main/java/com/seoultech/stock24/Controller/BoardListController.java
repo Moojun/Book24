@@ -1,6 +1,6 @@
 package com.seoultech.stock24.Controller;
 
-import com.seoultech.stock24.Entity.Notice;
+import com.seoultech.stock24.Entity.Board;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -22,7 +22,7 @@ public class BoardListController extends HttpServlet {
                          HttpServletResponse response)
             throws ServletException, IOException {
 
-        List<Notice> list = new ArrayList<>();
+        List<Board> list = new ArrayList<>();
 
         String resource = "db.properties";
         Properties properties = new Properties();
@@ -52,8 +52,8 @@ public class BoardListController extends HttpServlet {
                 String files = rs.getString("files");
                 String content = rs.getString("content");
 
-                Notice notice = new Notice(id, title, writerId, regDate, hit, files, content);
-                list.add(notice);
+                Board board = new Board(id, title, writerId, regDate, hit, files, content);
+                list.add(board);
             }
             rs.close();
             st.close();
