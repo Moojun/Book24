@@ -13,9 +13,7 @@ import java.io.InputStream;
 import java.io.PrintWriter;
 import java.sql.*;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Properties;
+import java.util.*;
 
 @WebServlet(urlPatterns = {"/view/myPage", "/ind/myPage", "/move/myPage", "/del/myPage"})
 public class MyPageController extends HttpServlet {
@@ -50,7 +48,7 @@ public class MyPageController extends HttpServlet {
         LocalDate currentDate = LocalDate.now();
         String currentDStr = currentDate.toString();    // setLocalDate 는 없어서 String으로 형변환
 
-        List<Interest> interestList = new ArrayList<>();
+        List<Interest> interestList = new ArrayList<>();    // 관심 목록들을 담을 변수
 
         String resource = "db.properties";
         Properties properties = new Properties();
@@ -58,27 +56,49 @@ public class MyPageController extends HttpServlet {
         // view/stock.jsp 에서, "관심등록" 버튼을 통해 접근
         if (uri.equals("/view/myPage")) {
 
-            String stockName = request.getParameter("stockName");
+            // 실제로 stock 정보를 담을 List
+            List<String> stockName = new LinkedList<>();
 
-            if (stockName == null || stockName.equals("")) {
-                printAlertMessage(response, "검색된 주식 정보가 없습니다!");
-            } else {   // db 접근
+            String stockName__ = request.getParameter("stockName");
 
-                InputStream reader = getClass().getClassLoader().getResourceAsStream(resource);
-                properties.load(reader);
+            if (stockName__ == null || stockName__.equals("")) {
+                printAlertMessage(response, "입력된 정보가 없습니다.");
+            }  else {
+                // stock.jsp 에서 "관심등록" 버튼을 누른 경우, stockName__으로 오는 형식은 아래와 같다.
+                // [삼성증권, 삼성전자, 삼성물산] : 따라서, 오른쪽 왼쪽 대괄호를 제거해야 함
+                stockName__ = stockName__.replace('[', ' ');
+                stockName__ = stockName__.replace(']', ' ');
+                stockName__ = stockName__.replaceAll(" ", "");
 
-                String dbURL = properties.getProperty("url");
-                String dbID = properties.getProperty("username");
-                String dbPassword = properties.getProperty("password");
+                if (stockName__.contains(",")) {
+                    String[] arr = stockName__.split(",");
+                    stockName.addAll(Arrays.asList(arr));
+                } else {
+                    stockName.add(stockName__); // 하나인 경우는 바로 더함
+                }
+            }
 
-                try {
-                    Class.forName("com.mysql.cj.jdbc.Driver");
+            // Session 의 stockClass 배열도 가져와야 함
+            String [] seStockClass = (String []) session.getAttribute("stockClass");
 
-                    java.sql.Connection con = DriverManager.getConnection(dbURL, dbID, dbPassword);
+            // db 접근
+            InputStream reader = getClass().getClassLoader().getResourceAsStream(resource);
+            properties.load(reader);
+
+            String dbURL = properties.getProperty("url");
+            String dbID = properties.getProperty("username");
+            String dbPassword = properties.getProperty("password");
+
+            try {
+                Class.forName("com.mysql.cj.jdbc.Driver");
+
+                java.sql.Connection con = DriverManager.getConnection(dbURL, dbID, dbPassword);
+
+                for (int i = 0; i < stockName.size(); i++) {
 
                     String sql = "SELECT * FROM mypage_interest WHERE stock_name = ? AND user_id = ?";
                     PreparedStatement pst = con.prepareStatement(sql);
-                    pst.setString(1, stockName);
+                    pst.setString(1, stockName.get(i));
                     pst.setString(2, (String) session.getAttribute("userID"));
 
                     ResultSet rs = pst.executeQuery();
@@ -88,51 +108,49 @@ public class MyPageController extends HttpServlet {
                                 + "VALUES (?, ?, ?, ?)";
                         PreparedStatement pst2 = con.prepareStatement(sql2);
                         pst2.setString(1, (String) session.getAttribute("userID"));
-                        pst2.setString(2, stockName);
-                        pst2.setString(3, (String) session.getAttribute("stockClass"));
+                        pst2.setString(2, stockName.get(i));
+                        pst2.setString(3, seStockClass[i]);
                         pst2.setString(4, currentDStr);
 
                         pst2.executeUpdate();
                     }
-
-                    rs.close();
-                    pst.close();
-                    con.close();
-
-                } catch (ClassNotFoundException | SQLException e) {
-                    throw new RuntimeException(e);
                 }
 
-                try {
-                    Class.forName("com.mysql.cj.jdbc.Driver");
+                con.close();
 
-                    java.sql.Connection con = DriverManager.getConnection(dbURL, dbID, dbPassword);
-
-                    String sql3 = "SELECT * FROM mypage_interest WHERE user_id = ?";
-                    PreparedStatement pst3 = con.prepareStatement(sql3);
-                    pst3.setString(1, (String) session.getAttribute("userID"));
-                    ResultSet rs3 = pst3.executeQuery();
-
-                    while (rs3.next()) {
-                        String stock_name = rs3.getString("stock_name");
-                        String stock_class = rs3.getString("class");
-                        String regDate = rs3.getString("regDate");
-
-                        Interest interest = new Interest(stock_name, stock_class, regDate);
-                        interestList.add(interest);
-                    }
-
-                    rs3.close();
-                    pst3.close();
-                    con.close();
-                } catch (ClassNotFoundException | SQLException e) {
-                    throw new RuntimeException(e);
-                }
+            } catch(ClassNotFoundException | SQLException e){
+                throw new RuntimeException(e);
             }
 
-            // MyPage.jsp 로 이동 전에 session 에 저장된 아래 두 값 제거
+            try {
+                Class.forName("com.mysql.cj.jdbc.Driver");
+
+                java.sql.Connection con = DriverManager.getConnection(dbURL, dbID, dbPassword);
+
+                String sql3 = "SELECT * FROM mypage_interest WHERE user_id = ?";
+                PreparedStatement pst3 = con.prepareStatement(sql3);
+                pst3.setString(1, (String) session.getAttribute("userID"));
+                ResultSet rs3 = pst3.executeQuery();
+
+                while (rs3.next()) {
+                    String stock_name = rs3.getString("stock_name");
+                    String stock_class = rs3.getString("class");
+                    String regDate = rs3.getString("regDate");
+
+                    Interest interest = new Interest(stock_name, stock_class, regDate);
+                    interestList.add(interest);
+                }
+
+                rs3.close();
+                pst3.close();
+                con.close();
+            } catch (ClassNotFoundException | SQLException e) {
+                throw new RuntimeException(e);
+            }
+
+            // myPage.jsp 로 이동 전에 session 에 저장된 아래 두 값 제거
             session.removeAttribute("stockName");
-            session.removeAttribute("stockInfoMap");
+            session.removeAttribute("manyStockInfoList");
 
             request.setAttribute("interestList", interestList);
             request.getRequestDispatcher("myPage.jsp").forward(request, response);
@@ -173,9 +191,10 @@ public class MyPageController extends HttpServlet {
                 throw new RuntimeException(e);
             }
 
-            // MyPage.jsp 로 이동 전에 session 에 저장된 아래 두 값 제거
+            // MyPage.jsp 로 이동 전에 session 에 저장된 해당 값들 제거
             session.removeAttribute("stockName");
-            session.removeAttribute("stockInfoMap");
+            session.removeAttribute("stockClass");
+            session.removeAttribute("manyStockInfoList");
 
             request.setAttribute("interestList", interestList);
             request.getRequestDispatcher("../view/myPage.jsp").forward(request, response);
