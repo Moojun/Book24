@@ -10,7 +10,7 @@
     <fmt:formatDate value="${today}" pattern="HH:mm:ss" />
 </c:set>
 <c:set var="stockName" value="${sessionScope.stockName}" />
-<c:set var="stockInfoMap" value="${sessionScope.stockInfoMap}" />
+<c:set var="manyStockInfoList" value="${sessionScope.manyStockInfoList}" />
 
 <!DOCTYPE html>
 <html>
@@ -42,70 +42,104 @@
             <p>주식의 현재가를 실시간으로 보여주는 그래프에요</p>
             <p>현재 날짜: <c:out value="${stockViewDate}" /></p>
             <p>현재 시간: <c:out value="${stockViewClock}" /></p>
+            <p><c:out value="${stockName}" /></p>
+            <%--
+            <p><c:out value="${stockName}" /></p>
+            <p><c:out value="${manyStockInfoList}" /></p>
+            <c:forEach var="map2" items="${manyStockInfoList}" >
+                <c:forEach var="key_val" items="${map2}">
+                    key: ${key_val.key} <br>
+                    <c:forEach var="value_val" items="${key_val.value}">
+                        inner key : ${value_val.key} <br>
+                        inner value : ${value_val.value} <br>
+                    </c:forEach>
+                </c:forEach>
+            </c:forEach>
+            --%>
             <form method="post" action="stock">
                 <button type="submit" class="w-btn w-btn-green">차트 갱신하기</button>
 
                 <%-- 주식 명칭을 담아서 보냄--%>
                 <input type="hidden" name="stockName" value="${stockName}" />
             </form>
+            <form method="post" action="myPage">
+                <div class="interest-btn">
+                    <button type="submit" class="w-btn-outline w-btn-blue-outline">관심등록</button>
+
+                    <%-- 주식 명칭을 담아서 보냄--%>
+                    <input type="hidden" name="stockName" value="${stockName}" />
+                </div>
+            </form>
         </div>
     </div>
     <div id="chart"></div>
     <script>
-        let stockName = "<c:out value="${stockName}"/>";
-        let mapData = [];
-
-        <c:forEach var="map" items="${stockInfoMap}" >
-            mapData.push(["${map.key}", ${map.value}]);
+        let stockNameArr = [];
+        <c:forEach var="i" items="${stockName}">
+            stockNameArr.push("${i}");
         </c:forEach>
 
-        // 위의 forEach 에서 reverse 가 힘들기 때문에 여기서 reverse() 절차 필요
-        mapData.reverse();
-        console.log(mapData);
+        let manyStockInfoList = [];
 
-        anychart.onDocumentReady(function () {
+        <c:forEach var="map2" items="${manyStockInfoList}" >
+            <c:forEach var="key_val" items="${map2}">
+                <c:forEach var="value_val" items="${key_val.value}">
+                    manyStockInfoList.push(["${key_val.key}", "${value_val.key}", "${value_val.value}"])
+                </c:forEach>
+            </c:forEach>
+        </c:forEach>
+        manyStockInfoList.reverse(); // 위의 forEach 에서 reverse 가 힘들기 때문에 여기서 reverse() 절차 필요
 
-            let data = mapData;
+        for (let i = 0; i <manyStockInfoList.length; i++) {
+            console.log(manyStockInfoList[i]);
+        }
 
-            // create a data set
-            let dataSet = anychart.data.set(data);
+        for (let i = 0; i < stockNameArr.length; i++ ) {
+            let dataArr = []
 
-            // map the data for all series
-            let firstSeriesData = dataSet.mapAs({x: 0, value: 1});
+            for (let j = 0; j < manyStockInfoList.length; j++) {
+                if (stockNameArr[i] === manyStockInfoList[j][0]) {
+                    dataArr.push([manyStockInfoList[j][1], manyStockInfoList[j][2]]);
+                }
+            }
 
-            // create a line chart
-            let chart = anychart.line();
+            anychart.onDocumentReady(function () {
 
-            // create the series and name them
-            let firstSeries = chart.line(firstSeriesData);
-            firstSeries.name(stockName);
+                    let data = dataArr;
 
-            // add a legend
-            chart.legend().enabled(true);
+                    // create a data set
+                    let dataSet = anychart.data.set(data);
 
-            // add a title
-            chart.title("주식의 현재 가격");
+                    // map the data for all series
+                    let firstSeriesData = dataSet.mapAs({x: 0, value: 1});
 
-            // specify where to display the chart
-            chart.container("chart");
+                    // create a line chart
+                    let chart = anychart.line();
 
-            // name the axes
-            chart.xAxis().title("시간(단위: 시:분:초)");
-            chart.yAxis().title("현재 가격");
+                    // create the series and name them
+                    let firstSeries = chart.line(firstSeriesData);
+                    //firstSeries.name(stockName);
+                    firstSeries.name(stockNameArr[i]);
 
-            // draw the resulting chart
-            chart.draw();
-        });
+                    // add a legend
+                    chart.legend().enabled(true);
+
+                    // add a title
+                    chart.title(stockNameArr[i] + " 의 현재 가격");
+
+                    // specify where to display the chart
+                    chart.container("chart");
+
+                    // name the axes
+                    chart.xAxis().title("시간(단위: 시:분:초)");
+                    chart.yAxis().title("현재 가격");
+
+                    // draw the resulting chart
+                    chart.draw();
+                });
+        }
 
     </script>
-    <form method="post" action="myPage">
-        <div class="interest-btn">
-            <button type="submit" class="w-btn-outline w-btn-blue-outline">관심등록</button>
-
-            <%-- 주식 명칭을 담아서 보냄--%>
-            <input type="hidden" name="stockName" value="${stockName}" />
-        </div>
-    </form>
 
     <%--include footer--%>
     <jsp:include page="../inner/footer.jsp" />

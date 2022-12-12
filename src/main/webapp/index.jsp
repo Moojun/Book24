@@ -65,6 +65,9 @@
 
     <div class="cover">
         <h1>검색할 주식을 입력하세요</h1>
+        <h3>최대 3개까지 동시에 검색이 가능하며, ' , '로 구분해서 작성해 주세요</h3>
+        <p>예시 1] 삼성전자</p>
+        <p>예시 2] 삼성전자, 삼성증권, 삼성물산</p>
         <form class="flex-form" method="post" action="view/stock">
             <label for="from">
                 <i class="ion-location"></i>
