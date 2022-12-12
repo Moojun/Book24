@@ -42,20 +42,6 @@
             <p>주식의 현재가를 실시간으로 보여주는 그래프에요</p>
             <p>현재 날짜: <c:out value="${stockViewDate}" /></p>
             <p>현재 시간: <c:out value="${stockViewClock}" /></p>
-            <p><c:out value="${stockName}" /></p>
-            <%--
-            <p><c:out value="${stockName}" /></p>
-            <p><c:out value="${manyStockInfoList}" /></p>
-            <c:forEach var="map2" items="${manyStockInfoList}" >
-                <c:forEach var="key_val" items="${map2}">
-                    key: ${key_val.key} <br>
-                    <c:forEach var="value_val" items="${key_val.value}">
-                        inner key : ${value_val.key} <br>
-                        inner value : ${value_val.value} <br>
-                    </c:forEach>
-                </c:forEach>
-            </c:forEach>
-            --%>
             <form method="post" action="stock">
                 <button type="submit" class="w-btn w-btn-green">차트 갱신하기</button>
 
@@ -94,6 +80,20 @@
             console.log(manyStockInfoList[i]);
         }
 
+        const setRandomLineColor = [{
+            color: "red", thickness: 3
+        }, {
+            color: "blue", thickness: 2
+        }, {
+            color: "green", thickness: 2
+        }, {
+            color: "orange", thickness: 2
+        }, {
+            color: "brown", thickness: 3
+        }, {
+            color: "coral", thickness: 3
+        }];
+
         for (let i = 0; i < stockNameArr.length; i++ ) {
             let dataArr = []
 
@@ -102,7 +102,6 @@
                     dataArr.push([manyStockInfoList[j][1], manyStockInfoList[j][2]]);
                 }
             }
-
             anychart.onDocumentReady(function () {
 
                     let data = dataArr;
@@ -118,8 +117,10 @@
 
                     // create the series and name them
                     let firstSeries = chart.line(firstSeriesData);
-                    //firstSeries.name(stockName);
                     firstSeries.name(stockNameArr[i]);
+
+                    let randNum = Math.floor(Math.random() * 6)
+                    firstSeries.stroke(setRandomLineColor[randNum]);
 
                     // add a legend
                     chart.legend().enabled(true);

@@ -148,8 +148,9 @@ public class MyPageController extends HttpServlet {
                 throw new RuntimeException(e);
             }
 
-            // myPage.jsp 로 이동 전에 session 에 저장된 아래 두 값 제거
+            // MyPage.jsp 로 이동 전에 session 에 저장된 해당 값들 제거
             session.removeAttribute("stockName");
+            session.removeAttribute("stockClass");
             session.removeAttribute("manyStockInfoList");
 
             request.setAttribute("interestList", interestList);
@@ -204,7 +205,7 @@ public class MyPageController extends HttpServlet {
         else if (uri.equals("/move/myPage")) {
 
             String stockName = request.getParameter("stockName");
-            session.setAttribute("stockName", stockName);
+            session.setAttribute("stockNameFromMyPage", stockName); // 중복을 피하기 위해 "stockName" 이 아닌 다른 이름으로 세션에 저장
 
             // StockViewController 로 redirect: 경로 수정을 위해서.
             // 아래 forwarding 의 경우는 경로 수정이 반영되지 않음

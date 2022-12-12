@@ -50,12 +50,16 @@ public class StockViewController extends HttpServlet {
         List<String> stockName = new LinkedList<>();
 
         String stockName__ = request.getParameter("stockName");
+        String seStockName = (String) checkedUserLoginSession.getAttribute("stockNameFromMyPage");
+
+        // redirect 할 때, session 에 값을 저장했으므로 session 에서 값을 가져온다.
+        if (seStockName != null){
+            stockName__ = seStockName;
+        }
+        checkedUserLoginSession.removeAttribute("stockNameFromMyPage"); // 사용 후 바로 제거
 
         if (stockName__ == null || stockName__.equals("")) {
             printAlertMessage(response, "입력된 정보가 없습니다.");
-            // 이 부분 잠시 주석
-            // redirect 할 때, session에 값을 저장했으므로 session에서 값을 가져온다.
-            //stockName__ = (String) checkedUserLoginSession.getAttribute("stockName");
         } else {
             // stock.jsp 에서 "갱신하기" 버튼을 누른 경우, stockName__으로 오는 형식은 아래와 같다.
             // [삼성증권, 삼성전자, 삼성물산] : 따라서, 오른쪽 왼쪽 대괄호를 제거해야 함
