@@ -4,6 +4,7 @@
 <c:set var="userEmail" value="${sessionScope.userEmail}" />
 <c:set var="userID" value="${sessionScope.userID}" />
 <c:set var="interestList" value="${requestScope.interestList}" />
+<c:set var="myPostList" value="${requestScope.myPostList}" />
 
 <!DOCTYPE html>
 <html>
@@ -91,6 +92,32 @@
 
             <div class="right-myPage">
                 <p>내가 작성한 게시글</p>
+                <table>
+                    <thead>
+                    <tr>
+                        <th>번호</th>
+                        <th>제목</th>
+                        <th>조회수</th>
+                        <th>Control</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <c:forEach var="m" items="${myPostList}">
+                        <tr>
+                            <td>${m.id}</td>
+                            <td>${m.title}</td>
+                            <td>${m.hit}</td>
+                            <td>
+                                <button class="view">보기</button>
+                                <button class="delete">삭제하기</button>
+                            </td>
+                        </tr>
+                    </c:forEach>
+                    </tbody>
+                    <tfoot>
+                    <td colspan="5" class="tableFoot"></td>
+                    </tfoot>
+                </table>
             </div>
 
         </div>
