@@ -107,8 +107,13 @@
             <c:if test="${startNum + 5 > lastNum}">
                 <a href="#" class="bt next" onclick="alert('다음 페이지가 없습니다.');">> </a>
             </c:if>
-
         </div>
+
+        <div class="bt_wrap">
+            <a href="write" class="on">작성</a>
+<%--            <a href="#">수정</a>--%>
+        </div>
+
     </div>
 
     <%--include footer--%>
