@@ -108,8 +108,16 @@
                             <td>${m.title}</td>
                             <td>${m.hit}</td>
                             <td>
-                                <button class="view">보기</button>
-                                <button class="delete">삭제하기</button>
+                                <form method="post" action="../move2/myPage">
+                                    <button type="submit" class="view">보기</button>
+                                        <%-- id 값을 보냄--%>
+                                    <input type="hidden" name="boardId" value="${m.id}" />
+                                </form>
+                                <form method="post" action="../del2/myPage">
+                                    <button type="submit" class="delete">삭제하기</button>
+                                        <%-- 게시판 이름을 보냄--%>
+                                    <input type="hidden" name="boardTitle" value="${m.title}" />
+                                </form>
                             </td>
                         </tr>
                     </c:forEach>

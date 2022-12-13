@@ -39,7 +39,7 @@
     <div class="notice-list">
         <div class="board_title">
             <strong>주식 차트</strong>
-            <p>주식의 현재가를 실시간으로 보여주는 그래프에요</p>
+            <p>주식의 현재가를 실시간으로 불러올 수 있는 그래프에요</p>
             <p>현재 날짜: <c:out value="${stockViewDate}" /></p>
             <p>현재 시간: <c:out value="${stockViewClock}" /></p>
             <form method="post" action="stock">
@@ -76,9 +76,10 @@
         </c:forEach>
         manyStockInfoList.reverse(); // 위의 forEach 에서 reverse 가 힘들기 때문에 여기서 reverse() 절차 필요
 
+        /*
         for (let i = 0; i <manyStockInfoList.length; i++) {
             console.log(manyStockInfoList[i]);
-        }
+        } */
 
         const setRandomLineColor = [{
             color: "red", thickness: 3

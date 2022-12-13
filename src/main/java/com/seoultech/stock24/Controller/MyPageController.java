@@ -17,7 +17,8 @@ import java.sql.*;
 import java.time.LocalDate;
 import java.util.*;
 
-@WebServlet(urlPatterns = {"/view/myPage", "/ind/myPage", "/move/myPage", "/del/myPage"})
+@WebServlet(urlPatterns = {"/view/myPage", "/ind/myPage", "/move/myPage", "/move2/myPage",
+        "/del/myPage", "/del2/myPage"})
 public class MyPageController extends HttpServlet {
 
     @Override
@@ -157,7 +158,7 @@ public class MyPageController extends HttpServlet {
             request.getRequestDispatcher("../view/myPage.jsp").forward(request, response);
         }
 
-        // myPage.jsp 에서 "보기" 버튼을 누른 경우
+        // myPage.jsp 의 관심 목록에서 "보기" 버튼을 누른 경우
         else if (uri.equals("/move/myPage")) {
 
             String stockName = request.getParameter("stockName");
@@ -171,7 +172,7 @@ public class MyPageController extends HttpServlet {
             //request.getRequestDispatcher("../view/stock").forward(request, response);
         }
 
-        // myPage.jsp 에서 "삭제하기" 버튼을 누른 경우
+        // myPage.jsp 의 관심 목록에서 "삭제하기" 버튼을 누른 경우
         else if (uri.equals("/del/myPage")) {
             String stockName = request.getParameter("stockName");
 
@@ -191,6 +192,52 @@ public class MyPageController extends HttpServlet {
                 PreparedStatement pst = con.prepareStatement(sql);
                 pst.setString(1, (String)session.getAttribute("userID"));
                 pst.setString(2, stockName);
+
+                int res = pst.executeUpdate();
+                if (res > 0) {
+                    System.out.println("remove is complete");
+                }
+
+                pst.close();
+                con.close();
+
+            } catch (ClassNotFoundException | SQLException e) {
+                throw new RuntimeException(e);
+            }
+
+            // MyPageController 내에 /ind/myPage 로 redirect: 경로 수정을 위해서
+            response.sendRedirect("/ind/myPage");
+        }
+
+        // myPage.jsp 의 게시글에서 "보기" 버튼을 누른 경우
+        else if (uri.equals("/move2/myPage")) {
+
+            String boardId = request.getParameter("boardId");
+
+            response.sendRedirect("../board/detail?id=" + boardId);
+        }
+
+
+        // myPage.jsp 의 게시글에서 "삭제하기" 버튼을 누른 경우
+        else if (uri.equals("/del2/myPage")) {
+            String boardTitle = request.getParameter("boardTitle");
+
+            try {
+                Class.forName("com.mysql.cj.jdbc.Driver");
+
+                InputStream reader = getClass().getClassLoader().getResourceAsStream(resource);
+                properties.load(reader);
+
+                String dbURL = properties.getProperty("url");
+                String dbID = properties.getProperty("username");
+                String dbPassword = properties.getProperty("password");
+
+                java.sql.Connection con = DriverManager.getConnection(dbURL, dbID, dbPassword);
+
+                String sql = "DELETE FROM board WHERE writer_id = ? AND title = ?";
+                PreparedStatement pst = con.prepareStatement(sql);
+                pst.setString(1, (String)session.getAttribute("userID"));
+                pst.setString(2, boardTitle);
 
                 int res = pst.executeUpdate();
                 if (res > 0) {
