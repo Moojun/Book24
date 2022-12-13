@@ -1,6 +1,7 @@
 package com.seoultech.stock24.Controller;
 
-import com.seoultech.stock24.Entity.Notice;
+import com.seoultech.stock24.Entity.Board;
+import com.seoultech.stock24.Service.BoardService;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -22,48 +23,30 @@ public class BoardListController extends HttpServlet {
                          HttpServletResponse response)
             throws ServletException, IOException {
 
-        List<Notice> list = new ArrayList<>();
+        // 전달 형식: list?f=title&q=a
+        String field_ = request.getParameter("f");
+        String query_ = request.getParameter("q");
+        String page_ = request.getParameter("p");    // null 을 처리하기 위해 int 대신 String 사용.
 
-        String resource = "db.properties";
-        Properties properties = new Properties();
-
-        try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-
-            InputStream reader = getClass().getClassLoader().getResourceAsStream(resource);
-            properties.load(reader);
-
-            String dbURL = properties.getProperty("url");
-            String dbID = properties.getProperty("username");
-            String dbPassword = properties.getProperty("password");
-            String sql = "select * from board";
-
-            Connection con = DriverManager.getConnection(dbURL, dbID, dbPassword);
-            Statement st = con.createStatement();
-            ResultSet rs = st.executeQuery(sql);
-
-            while(rs.next()) {
-
-                int id = rs.getInt("id");
-                String title = rs.getString("title");
-                String writerId = rs.getString("writer_id");
-                Date regDate = rs.getDate("regdate");
-                int hit = rs.getInt("hit");
-                String files = rs.getString("files");
-                String content = rs.getString("content");
-
-                Notice notice = new Notice(id, title, writerId, regDate, hit, files, content);
-                list.add(notice);
-            }
-            rs.close();
-            st.close();
-            con.close();
-
-        } catch (ClassNotFoundException | SQLException e) {
-            throw new RuntimeException(e);
+        String field = "title";
+        if (field_ != null && !field_.equals("")) {
+            field = field_;
+        }
+        String query = "";
+        if (query_ != null && !query_.equals("")) {
+            query = query_;
+        }
+        int page = 1;
+        if (page_ != null && !page_.equals("")) {
+            page = Integer.parseInt(page_);
         }
 
+        BoardService service = new BoardService();
+        List<Board> list = service.getBoardList(field, query, page);
+        int count = service.getBoardCount(field, query);
+
         request.setAttribute("list", list);
+        request.setAttribute("count", count);
 
         // forward
         request.getRequestDispatcher("list.jsp").forward(request, response);

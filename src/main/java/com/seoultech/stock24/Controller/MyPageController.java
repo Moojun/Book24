@@ -1,6 +1,8 @@
 package com.seoultech.stock24.Controller;
 
 import com.seoultech.stock24.Entity.Interest;
+import com.seoultech.stock24.Entity.MyPost;
+import com.seoultech.stock24.Service.MyPageService;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -15,7 +17,8 @@ import java.sql.*;
 import java.time.LocalDate;
 import java.util.*;
 
-@WebServlet(urlPatterns = {"/view/myPage", "/ind/myPage", "/move/myPage", "/del/myPage"})
+@WebServlet(urlPatterns = {"/view/myPage", "/ind/myPage", "/move/myPage", "/move2/myPage",
+        "/del/myPage", "/del2/myPage"})
 public class MyPageController extends HttpServlet {
 
     @Override
@@ -49,6 +52,7 @@ public class MyPageController extends HttpServlet {
         String currentDStr = currentDate.toString();    // setLocalDate 는 없어서 String으로 형변환
 
         List<Interest> interestList = new ArrayList<>();    // 관심 목록들을 담을 변수
+        List<MyPost> myPostList;        // 내 글 작성 목록들을 담을 변수
 
         String resource = "db.properties";
         Properties properties = new Properties();
@@ -61,7 +65,8 @@ public class MyPageController extends HttpServlet {
 
             String stockName__ = request.getParameter("stockName");
 
-            if (stockName__ == null || stockName__.equals("")) {
+            // stock.jsp 에서 넘어오는 빈 형식이 '[]' 라, check 필요
+            if (stockName__ == null || stockName__.equals("") || stockName__.equals("[]")) {
                 printAlertMessage(response, "입력된 정보가 없습니다.");
             }  else {
                 // stock.jsp 에서 "관심등록" 버튼을 누른 경우, stockName__으로 오는 형식은 아래와 같다.
@@ -122,31 +127,9 @@ public class MyPageController extends HttpServlet {
                 throw new RuntimeException(e);
             }
 
-            try {
-                Class.forName("com.mysql.cj.jdbc.Driver");
-
-                java.sql.Connection con = DriverManager.getConnection(dbURL, dbID, dbPassword);
-
-                String sql3 = "SELECT * FROM mypage_interest WHERE user_id = ?";
-                PreparedStatement pst3 = con.prepareStatement(sql3);
-                pst3.setString(1, (String) session.getAttribute("userID"));
-                ResultSet rs3 = pst3.executeQuery();
-
-                while (rs3.next()) {
-                    String stock_name = rs3.getString("stock_name");
-                    String stock_class = rs3.getString("class");
-                    String regDate = rs3.getString("regDate");
-
-                    Interest interest = new Interest(stock_name, stock_class, regDate);
-                    interestList.add(interest);
-                }
-
-                rs3.close();
-                pst3.close();
-                con.close();
-            } catch (ClassNotFoundException | SQLException e) {
-                throw new RuntimeException(e);
-            }
+            MyPageService myPageService = new MyPageService();
+            interestList = myPageService.getMyInterestList((String) session.getAttribute("userID"));
+            myPostList = myPageService.getMyPostList((String) session.getAttribute("userID"));
 
             // MyPage.jsp 로 이동 전에 session 에 저장된 해당 값들 제거
             session.removeAttribute("stockName");
@@ -154,43 +137,16 @@ public class MyPageController extends HttpServlet {
             session.removeAttribute("manyStockInfoList");
 
             request.setAttribute("interestList", interestList);
+            request.setAttribute("myPostList", myPostList);
             request.getRequestDispatcher("myPage.jsp").forward(request, response);
         }
 
         // index.jsp 에서 "마이페이지" 메뉴를 통해 접근
         else if (uri.equals("/ind/myPage")) {
-            try {
-                Class.forName("com.mysql.cj.jdbc.Driver");
 
-                InputStream reader = getClass().getClassLoader().getResourceAsStream(resource);
-                properties.load(reader);
-
-                String dbURL = properties.getProperty("url");
-                String dbID = properties.getProperty("username");
-                String dbPassword = properties.getProperty("password");
-
-                java.sql.Connection con = DriverManager.getConnection(dbURL, dbID, dbPassword);
-
-                String sql3 = "SELECT * FROM mypage_interest WHERE user_id = ?";
-                PreparedStatement pst3 = con.prepareStatement(sql3);
-                pst3.setString(1, (String) session.getAttribute("userID"));
-                ResultSet rs3 = pst3.executeQuery();
-
-                while (rs3.next()) {
-                    String stock_name = rs3.getString("stock_name");
-                    String stock_class = rs3.getString("class");
-                    String regDate = rs3.getString("regDate");
-
-                    Interest interest = new Interest(stock_name, stock_class, regDate);
-                    interestList.add(interest);
-                }
-
-                pst3.close();
-                con.close();
-
-            } catch (ClassNotFoundException | SQLException e) {
-                throw new RuntimeException(e);
-            }
+            MyPageService myPageService = new MyPageService();
+            interestList = myPageService.getMyInterestList((String) session.getAttribute("userID"));
+            myPostList = myPageService.getMyPostList((String) session.getAttribute("userID"));
 
             // MyPage.jsp 로 이동 전에 session 에 저장된 해당 값들 제거
             session.removeAttribute("stockName");
@@ -198,10 +154,11 @@ public class MyPageController extends HttpServlet {
             session.removeAttribute("manyStockInfoList");
 
             request.setAttribute("interestList", interestList);
+            request.setAttribute("myPostList", myPostList);
             request.getRequestDispatcher("../view/myPage.jsp").forward(request, response);
         }
 
-        // myPage.jsp 에서 "보기" 버튼을 누른 경우
+        // myPage.jsp 의 관심 목록에서 "보기" 버튼을 누른 경우
         else if (uri.equals("/move/myPage")) {
 
             String stockName = request.getParameter("stockName");
@@ -215,7 +172,7 @@ public class MyPageController extends HttpServlet {
             //request.getRequestDispatcher("../view/stock").forward(request, response);
         }
 
-        // myPage.jsp 에서 "삭제하기" 버튼을 누른 경우
+        // myPage.jsp 의 관심 목록에서 "삭제하기" 버튼을 누른 경우
         else if (uri.equals("/del/myPage")) {
             String stockName = request.getParameter("stockName");
 
@@ -235,6 +192,52 @@ public class MyPageController extends HttpServlet {
                 PreparedStatement pst = con.prepareStatement(sql);
                 pst.setString(1, (String)session.getAttribute("userID"));
                 pst.setString(2, stockName);
+
+                int res = pst.executeUpdate();
+                if (res > 0) {
+                    System.out.println("remove is complete");
+                }
+
+                pst.close();
+                con.close();
+
+            } catch (ClassNotFoundException | SQLException e) {
+                throw new RuntimeException(e);
+            }
+
+            // MyPageController 내에 /ind/myPage 로 redirect: 경로 수정을 위해서
+            response.sendRedirect("/ind/myPage");
+        }
+
+        // myPage.jsp 의 게시글에서 "보기" 버튼을 누른 경우
+        else if (uri.equals("/move2/myPage")) {
+
+            String boardId = request.getParameter("boardId");
+
+            response.sendRedirect("../board/detail?id=" + boardId);
+        }
+
+
+        // myPage.jsp 의 게시글에서 "삭제하기" 버튼을 누른 경우
+        else if (uri.equals("/del2/myPage")) {
+            String boardTitle = request.getParameter("boardTitle");
+
+            try {
+                Class.forName("com.mysql.cj.jdbc.Driver");
+
+                InputStream reader = getClass().getClassLoader().getResourceAsStream(resource);
+                properties.load(reader);
+
+                String dbURL = properties.getProperty("url");
+                String dbID = properties.getProperty("username");
+                String dbPassword = properties.getProperty("password");
+
+                java.sql.Connection con = DriverManager.getConnection(dbURL, dbID, dbPassword);
+
+                String sql = "DELETE FROM board WHERE writer_id = ? AND title = ?";
+                PreparedStatement pst = con.prepareStatement(sql);
+                pst.setString(1, (String)session.getAttribute("userID"));
+                pst.setString(2, boardTitle);
 
                 int res = pst.executeUpdate();
                 if (res > 0) {

@@ -202,8 +202,8 @@ public class StockViewController extends HttpServlet {
                 e.printStackTrace();
             }
         }
-        System.out.println("stockName size : " + stockName.size());
-        System.out.println("manyStockInfoList size: " + manyStockInfoList.size());
+        // System.out.println("stockName size : " + stockName.size());
+        // System.out.println("manyStockInfoList size: " + manyStockInfoList.size());
 
         HttpSession session = request.getSession();
 

@@ -1,6 +1,7 @@
 package com.seoultech.stock24.Controller;
 
-import com.seoultech.stock24.Entity.Notice;
+import com.seoultech.stock24.Entity.Board;
+import com.seoultech.stock24.Service.BoardService;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -22,48 +23,12 @@ public class BoardDetailController extends HttpServlet {
             throws ServletException, IOException {
 
         int id = Integer.parseInt(request.getParameter("id"));
-        //request.setAttribute("id", id);
 
-        String resource = "db.properties";
-        Properties properties = new Properties();
+        BoardService boardService = new BoardService();
+        Board board = boardService.getBoard(id);
 
-        try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
+        request.setAttribute("n", board);
 
-            InputStream reader = getClass().getClassLoader().getResourceAsStream(resource);
-            properties.load(reader);
-
-            String dbURL = properties.getProperty("url");
-            String dbID = properties.getProperty("username");
-            String dbPassword = properties.getProperty("password");
-            String sql = "select * from board where id = ?";
-
-            Connection con = DriverManager.getConnection(dbURL, dbID, dbPassword);
-            PreparedStatement pst = con.prepareStatement(sql);
-            pst.setInt(1, id);
-            ResultSet rs = pst.executeQuery();
-
-            rs.next();
-
-            String title = rs.getString("title");
-            String writerId = rs.getString("writer_id");
-            Date regDate = rs.getDate("regdate");
-            int hit = rs.getInt("hit");
-            String files = rs.getString("files");
-            String content = rs.getString("content");
-
-            Notice notice = new Notice(id, title, writerId, regDate,
-                    hit, files, content);
-
-            request.setAttribute("n", notice);
-
-            rs.close();
-            pst.close();
-            con.close();
-
-        } catch (ClassNotFoundException | SQLException e) {
-            throw new RuntimeException(e);
-        }
 
         // forward
         request.getRequestDispatcher("detail.jsp").forward(request, response);
